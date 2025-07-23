@@ -3,7 +3,7 @@
  * @author: Timothy Sturges
  * 
  * The User entity that contains all the attributes of the User object in the SoundScape application.
- * Stores the information of users of the website for database purposes.
+ * Stores the information of users of the website for database purposes. Formatted correctly.
  * 
  */
 
