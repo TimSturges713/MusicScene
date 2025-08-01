@@ -13,6 +13,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { urlToHttpOptions } from 'url';
+import { RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -26,7 +28,7 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient, private log: MessageService) { }
+  constructor(private http: HttpClient, private log: MessageService, private router: Router) { }
 
   /**
    * Login handles the authentication of an entered username and password
@@ -51,7 +53,9 @@ export class UserService {
       console.log("Logged in");
       console.log(username);
       localStorage.setItem("username", username);
+      
       this.log.add("You have been logged in");
+      this.router.navigateByUrl('/main-menu');
     });
   }
 

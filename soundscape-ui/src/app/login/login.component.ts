@@ -14,8 +14,6 @@ export class LoginComponent {
   constructor(private userService: UserService, private messageService: MessageService){}
 
   login(){
-    
-    
     const username = (document.getElementById("username") as HTMLInputElement)?.value;
     const password = (document.getElementById("password") as HTMLInputElement)?.value;
     this.messageService.add("Logging in user " + username);
