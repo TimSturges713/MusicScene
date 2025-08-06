@@ -12,10 +12,7 @@ import { User } from './user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
-import { urlToHttpOptions } from 'url';
-import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
-
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +26,11 @@ export class UserService {
   };
 
   constructor(private http: HttpClient, private log: MessageService, private router: Router) { }
+
+  createUser(user: User){
+     this.http.get<User>(this.loginUrl + user.username).pipe(tap(_ => this.log.add(`User already exists`)))
+  }
+
 
   /**
    * Login handles the authentication of an entered username and password

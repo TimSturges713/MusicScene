@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -8,5 +10,11 @@ import { Component } from '@angular/core';
   styleUrl: './main-menu.component.css'
 })
 export class MainMenuComponent {
+  constructor(private router: Router, private messageService: MessageService){}
 
+  logout(){
+    localStorage.removeItem("username");
+    this.router.navigateByUrl('/login');
+    this.messageService.add("Logged out");
+  }
 }
