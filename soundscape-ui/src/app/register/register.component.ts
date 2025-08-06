@@ -28,7 +28,16 @@ export class RegisterComponent {
       this.messageService.add("Please fill out all fields");
       return;
     }
-    this.userService.createUser({username, password, email, bio, city});
-    
+  
+    this.userService.getUsers().subscribe(users => {
+      const existingUser = users.find(user => user.username === username);
+      if(existingUser){
+        this.messageService.add("User already exists");
+        return;
+      }
+      this.userService.addUser({username, bio, city, password, email}).subscribe();
+      this.messageService.add("User registered");
+      this.router.navigateByUrl('/main-menu');
+    })
   }
 }

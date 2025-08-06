@@ -27,8 +27,11 @@ export class UserService {
 
   constructor(private http: HttpClient, private log: MessageService, private router: Router) { }
 
-  createUser(user: User){
-     this.http.get<User>(this.loginUrl + user.username).pipe(tap(_ => this.log.add(`User already exists`)))
+  addUser(user: User){
+      return this.http.post<User>(this.loginUrl, user, this.httpOptions).pipe(
+      tap(_ => this.log.add(`added user username=${user.username}`)),
+      catchError(this.handleError<User>('addUser'))
+    );
   }
 
 
@@ -71,6 +74,18 @@ export class UserService {
       tap(_ => this.log.add(`fetched user username=${username}`)),
       catchError(this.handleError<User>(`getUser username=${username}`))
     );
+  }
+
+  /**
+   * Handles HTTP request to get all users.
+   * 
+   */
+  getUsers():Observable<User[]>{
+    return this.http.get<User[]>(this.loginUrl)
+      .pipe(
+        tap(_ => this.log.add('fetched users')),
+        catchError(this.handleError<User[]>('getUsers', []))
+      );
   }
 
   /**
