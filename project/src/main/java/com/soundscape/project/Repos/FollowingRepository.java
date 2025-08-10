@@ -13,8 +13,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FollowingRepository extends JpaRepository<Following, Long> {
     // Find where the inputted user appears as a follower
-    Following[] findbyFollowing(Long following_id);
+    Following[] findByFollowingId(Long followingId);
     // Find where the inputted user is followed
-    Following[] findbyFollower(Long follower_id);
+    Following[] findByFollowerId(Long followerId);
     
 }

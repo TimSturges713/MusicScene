@@ -23,7 +23,7 @@ public class FollowingService {
      * @return A list of UserIds for the followers of the User
      */
     public List<Long> getFollowers(Long userId) {
-        Following[] followObjs = followingRepository.findbyFollowing(userId);
+        Following[] followObjs = followingRepository.findByFollowingId(userId);
         List<Long> followerIds = new ArrayList<Long>();
         for (Following follower : followObjs) {
             followerIds.add(follower.getFollower_id());
@@ -32,7 +32,7 @@ public class FollowingService {
     }
 
     public Following findByFollowingAndFollower(Long followingId, Long followerId){
-        Following[] followObjs = followingRepository.findbyFollowing(followingId);
+        Following[] followObjs = followingRepository.findByFollowingId(followingId);
         for (Following follower : followObjs) {
             if(follower.getFollower_id() == followerId){
                 return follower;
@@ -47,7 +47,7 @@ public class FollowingService {
      * @return A list of UserIds for User's the inputted user follows
      */
     public List<Long> getFollowing(Long userId) {
-        Following[] followObjs = followingRepository.findbyFollower(userId);
+        Following[] followObjs = followingRepository.findByFollowerId(userId);
         List<Long> followingIds = new ArrayList<Long>();
         for (Following follower : followObjs) {
             followingIds.add(follower.getFollowing_id());

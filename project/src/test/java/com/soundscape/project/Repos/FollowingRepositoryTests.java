@@ -1,7 +1,7 @@
 package com.soundscape.project.Repos;
 
 import org.junit.jupiter.api.extension.ExtendWith;
-import com.soundscape.project.Entities.User;
+
 
 
 import org.junit.jupiter.api.Test;
@@ -10,17 +10,19 @@ import org.mockito.Mock;
 import com.soundscape.project.Entities.*;
 
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+
+
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class FollowingRepositoryTests {
-    @Mock
+    @MockitoBean
     private FollowingRepository followingRepository;
-    @Mock
+    @MockitoBean
     private UserRepository userRepository;
 
     @Test
@@ -35,10 +37,10 @@ public class FollowingRepositoryTests {
         
 
         // Mock the behavior of findbyFollower to return an empty array for no
-        when(followingRepository.findbyFollowing(1L)).thenReturn(followings);
+        when(followingRepository.findByFollowingId(1L)).thenReturn(followings);
 
         // Act
-        Following[] found = followingRepository.findbyFollowing(1L);
+        Following[] found = followingRepository.findByFollowingId(1L);
 
         // Assert
         
@@ -62,10 +64,10 @@ public class FollowingRepositoryTests {
         
 
         // Mock the behavior of findbyFollower to return an empty array for no
-        when(followingRepository.findbyFollower(1L)).thenReturn(followings);
+        when(followingRepository.findByFollowerId(1L)).thenReturn(followings);
 
         // Act
-        Following[] found = followingRepository.findbyFollower(1L);
+        Following[] found = followingRepository.findByFollowerId(1L);
 
         // Assert
         
