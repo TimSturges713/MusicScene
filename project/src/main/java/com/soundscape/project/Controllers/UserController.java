@@ -60,9 +60,7 @@ public class UserController {
             if(n == null){ // if the user doesn't exist
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<User>(n, HttpStatus.OK);
-        
-        
+            return new ResponseEntity<User>(n, HttpStatus.OK); 
     }
 
     // Delete a user via userId, uses a pre-made userRepo method to find user
