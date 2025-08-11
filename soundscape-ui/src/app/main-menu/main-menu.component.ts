@@ -12,6 +12,11 @@ import { MessageService } from '../message.service';
 export class MainMenuComponent {
   constructor(private router: Router, private messageService: MessageService){}
 
+  account(){
+    this.router.navigateByUrl('/account');
+  }
+
+
   logout(){
     localStorage.removeItem("username");
     this.router.navigateByUrl('/login');

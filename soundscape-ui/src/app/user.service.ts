@@ -64,6 +64,13 @@ export class UserService {
     });
   }
 
+  deleteUser(username:String):Observable<User>{
+    return this.http.delete<User>(this.loginUrl + username).pipe(
+      tap(_ => this.log.add(`deleted user username=${username}`)),
+      catchError(this.handleError<User>(`deleteUser username=${username}`))
+    );
+  }
+
   /**
    * Handles HTTP request to get a user via username entered via the user.
    * @param username - The username of the requested user.

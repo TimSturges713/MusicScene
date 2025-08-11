@@ -37,6 +37,7 @@ export class RegisterComponent {
       }
       this.userService.addUser({username, bio, city, password, email}).subscribe();
       this.messageService.add("User registered");
+      localStorage.setItem("username", username);
       this.router.navigateByUrl('/main-menu');
     })
   }
