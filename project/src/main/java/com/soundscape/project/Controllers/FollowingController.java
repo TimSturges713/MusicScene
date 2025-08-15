@@ -101,8 +101,7 @@ public class FollowingController {
 
     @DeleteMapping(path="/following/{userId}")
     public ResponseEntity<List<Following>> deleteFollowingList(@PathVariable Long userId){
-        List<Following> n = followingService.getAllFollowingsContainingUser(userId);
-        followingRepository.deleteAll(n);
+        List<Following> n = followingService.deleteUsersFollowing(userId);
         return new ResponseEntity<List<Following>>(n, HttpStatus.OK);
     }
 }

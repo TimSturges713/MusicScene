@@ -1,13 +1,13 @@
 package com.soundscape.project.Services;
 
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.soundscape.project.Entities.Following;
 import java.util.*;
 import com.soundscape.project.Repos.FollowingRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class FollowingService {
@@ -39,6 +39,13 @@ public class FollowingService {
             }
         }
         return null;
+    }
+
+    @Transactional
+    public List<Following> deleteUsersFollowing(Long userId){
+        List<Following> followings = getAllFollowingsContainingUser(userId);
+        followingRepository.deleteAll(followings);
+        return followings;
     }
 
     public List<Following> getAllFollowingsContainingUser(Long userId){

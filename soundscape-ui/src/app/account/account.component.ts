@@ -61,18 +61,18 @@ export class AccountComponent {
     this.userService.getUser(this.username as string).subscribe((user) => {
       this.followingService.deleteUserRecords(user);
     });
-    //this.userService.deleteUser(this.username).subscribe(
-      //(user) =>{
-        //this.messageService.add("Account Deleted");
+    this.userService.deleteUser(this.username).subscribe(
+      (user) =>{
+        this.messageService.add("Account Deleted");
 
-    //    localStorage.removeItem("username");
-      //  this.router.navigateByUrl('/login');
-      //},
-      //(error) => {
-      //  this.messageService.add("Error deleting account");
-      //  return;
-     // }
-    //);
+        localStorage.removeItem("username");
+        this.router.navigateByUrl('/login');
+      },
+      (error) => {
+        this.messageService.add("Error deleting account");
+        return;
+      }
+    );
     
   }
 }
