@@ -23,22 +23,28 @@ public class FollowingService {
      * @return A list of UserIds for the followers of the User
      */
     public List<Long> getFollowers(Long userId) {
-        Following[] followObjs = followingRepository.findByFollowingId(userId);
+        List<Following> followObjs = followingRepository.findByFollowedId(userId);
         List<Long> followerIds = new ArrayList<Long>();
         for (Following follower : followObjs) {
-            followerIds.add(follower.getFollower_id());
+            followerIds.add(follower.getFollowingId());
         }
         return followerIds;
     }
 
-    public Following findByFollowingAndFollower(Long followingId, Long followerId){
-        Following[] followObjs = followingRepository.findByFollowingId(followingId);
+    public Following findByFollowingAndFollowed(Long followingId, Long followedId){
+        List<Following> followObjs = followingRepository.findByFollowingId(followingId);
         for (Following follower : followObjs) {
-            if(follower.getFollower_id() == followerId){
+            if(follower.getFollowedId() == followedId){
                 return follower;
             }
         }
         return null;
+    }
+
+    public List<Following> getAllFollowingsContainingUser(Long userId){
+        List<Following> followObjs = followingRepository.findByFollowingId(userId);
+        followObjs.addAll(followingRepository.findByFollowedId(userId));
+        return followObjs;
     }
 
     /**
@@ -47,10 +53,10 @@ public class FollowingService {
      * @return A list of UserIds for User's the inputted user follows
      */
     public List<Long> getFollowing(Long userId) {
-        Following[] followObjs = followingRepository.findByFollowerId(userId);
+        List<Following> followObjs = followingRepository.findByFollowingId(userId);
         List<Long> followingIds = new ArrayList<Long>();
         for (Following follower : followObjs) {
-            followingIds.add(follower.getFollowing_id());
+            followingIds.add(follower.getFollowedId());
         }
         return followingIds;
     }

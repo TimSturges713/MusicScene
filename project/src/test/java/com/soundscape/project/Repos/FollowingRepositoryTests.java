@@ -2,7 +2,7 @@ package com.soundscape.project.Repos;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 
-
+import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,9 +30,9 @@ public class FollowingRepositoryTests {
         Following following1 = new Following(2L, 1L);
         Following following2 = new Following(4L, 1L);
 
-        Following[] followings = new Following[2];
-        followings[0] = following1;
-        followings[1] = following2;
+        List<Following> followings = new ArrayList<Following>();
+        followings.add(following1);
+        followings.add(following2);
 
         
 
@@ -40,15 +40,15 @@ public class FollowingRepositoryTests {
         when(followingRepository.findByFollowingId(1L)).thenReturn(followings);
 
         // Act
-        Following[] found = followingRepository.findByFollowingId(1L);
+        List<Following> found = followingRepository.findByFollowingId(1L);
 
         // Assert
         
-        assertEquals(2, found.length); 
-        assertEquals(2L, found[0].getFollower_id());
-        assertEquals(1L, found[0].getFollowing_id());
-        assertEquals(4L, found[1].getFollower_id());
-        assertEquals(1L, found[1].getFollowing_id());
+        assertEquals(2, found.size()); 
+        assertEquals(2L, found.get(0).getFollowedId());
+        assertEquals(1L, found.get(0).getFollowingId());
+        assertEquals(4L, found.get(1).getFollowedId());
+        assertEquals(1L, found.get(1).getFollowingId());
 
     }
 
@@ -57,25 +57,26 @@ public class FollowingRepositoryTests {
         Following following1 = new Following(1L, 2L);
         Following following2 = new Following(1L, 4L);
 
-        Following[] followings = new Following[2];
-        followings[0] = following1;
-        followings[1] = following2;
+         List<Following> followings = new ArrayList<Following>();
+        followings.add(following1);
+        followings.add(following2);
+
 
         
 
         // Mock the behavior of findbyFollower to return an empty array for no
-        when(followingRepository.findByFollowerId(1L)).thenReturn(followings);
+        when(followingRepository.findByFollowedId(1L)).thenReturn(followings);
 
         // Act
-        Following[] found = followingRepository.findByFollowerId(1L);
+        List<Following> found = followingRepository.findByFollowedId(1L);
 
         // Assert
         
-        assertEquals(2, found.length); 
-        assertEquals(1L, found[0].getFollower_id());
-        assertEquals(2L, found[0].getFollowing_id());
-        assertEquals(1L, found[1].getFollower_id());
-        assertEquals(4L, found[1].getFollowing_id());
+        assertEquals(2, found.size()); 
+        assertEquals(1L, found.get(0).getFollowedId());
+        assertEquals(2L, found.get(0).getFollowingId());
+        assertEquals(1L, found.get(1).getFollowedId());
+        assertEquals(4L, found.get(1).getFollowingId());
 
 
     }

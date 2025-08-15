@@ -134,7 +134,7 @@ public class FollowingControllerTests {
         Following following = new Following(10L, 14L);
         
 
-        when(followingService.findByFollowingAndFollower(5L, 1L)).thenReturn(following);
+        when(followingService.findByFollowingAndFollowed(5L, 1L)).thenReturn(following);
         doNothing().when(followingRepository).delete(following);
 
         mvc.perform(delete("/users/following/1/5"))
@@ -147,7 +147,7 @@ public class FollowingControllerTests {
      */
     @Test
     public void testDeleteFollowingFail() throws Exception {
-        when(followingService.findByFollowingAndFollower(5L, 1L)).thenReturn(null);
+        when(followingService.findByFollowingAndFollowed(5L, 1L)).thenReturn(null);
 
         mvc.perform(delete("/users/following/1/5"))
             .andExpect(status().isNotFound());
@@ -161,7 +161,7 @@ public class FollowingControllerTests {
         Following following = new Following(20L, 21L);
         
 
-        when(followingService.findByFollowingAndFollower(1L, 8L)).thenReturn(following);
+        when(followingService.findByFollowingAndFollowed(1L, 8L)).thenReturn(following);
         doNothing().when(followingRepository).delete(following);
 
         mvc.perform(delete("/users/followers/1/8"))
@@ -174,7 +174,7 @@ public class FollowingControllerTests {
      */
     @Test
     public void testDeleteFollowerFail() throws Exception {
-        when(followingService.findByFollowingAndFollower(1L, 8L)).thenReturn(null);
+        when(followingService.findByFollowingAndFollowed(1L, 8L)).thenReturn(null);
 
         mvc.perform(delete("/users/followers/1/8"))
             .andExpect(status().isNotFound());

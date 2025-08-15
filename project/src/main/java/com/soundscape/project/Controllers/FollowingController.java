@@ -81,7 +81,7 @@ public class FollowingController {
     
     @DeleteMapping(path="/following/{userId}/{followingId}")
     public ResponseEntity<Following> deleteFollowing(@PathVariable Long userId, @PathVariable Long followingId){
-        Following n = followingService.findByFollowingAndFollower(followingId, userId);
+        Following n = followingService.findByFollowingAndFollowed(followingId, userId);
         if(n == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -89,13 +89,20 @@ public class FollowingController {
         return new ResponseEntity<Following>(n, HttpStatus.OK);
     }
 
-    @DeleteMapping(path="/followers/{userId}/{followerId}")
-    public ResponseEntity<Following> deleteFollower(@PathVariable Long userId, @PathVariable Long followerId){
-        Following n = followingService.findByFollowingAndFollower(userId, followerId);
+    @DeleteMapping(path="/followers/{followingId}/{followedId}")
+    public ResponseEntity<Following> deleteFollower(@PathVariable Long followingId, @PathVariable Long followedId){
+        Following n = followingService.findByFollowingAndFollowed(followingId, followedId);
         if(n == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         followingRepository.delete(n);
         return new ResponseEntity<Following>(n, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path="/following/{userId}")
+    public ResponseEntity<List<Following>> deleteFollowingList(@PathVariable Long userId){
+        List<Following> n = followingService.getAllFollowingsContainingUser(userId);
+        followingRepository.deleteAll(n);
+        return new ResponseEntity<List<Following>>(n, HttpStatus.OK);
     }
 }

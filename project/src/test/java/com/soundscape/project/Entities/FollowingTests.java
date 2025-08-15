@@ -8,17 +8,17 @@ public class FollowingTests {
     public void testFollowingConstructorAndGetters() {
         Following following = new Following(1L, 2L);
 
-        assertEquals(1L, following.getFollower_id());
-        assertEquals(2L, following.getFollowing_id());
+        assertEquals(1L, following.getFollowedId());
+        assertEquals(2L, following.getFollowingId());
     }
 
     @Test
     public void testSetters() {
         Following following = new Following();
-        following.setFollower_id(3L);
-        following.setFollowing_id(4L);
+        following.setFollowedId(3L);
+        following.setFollowingId(4L);
 
-        assertEquals(3L, following.getFollower_id());
-        assertEquals(4L, following.getFollowing_id());
+        assertEquals(3L, following.getFollowedId());
+        assertEquals(4L, following.getFollowingId());
     }
 }

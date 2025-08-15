@@ -16,7 +16,7 @@ public class Following {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long followerId;
+    private Long followedId;
 
     private Long followingId;
 
@@ -24,21 +24,21 @@ public class Following {
 
     }
 
-    public Following(Long follower_id, Long following_id){
-        this.followerId = follower_id;
+    public Following(Long followed_id, Long following_id){
+        this.followedId = followed_id;
         this.followingId = following_id;
     }
 
-    public Long getFollower_id() {
-        return followerId;
+    public Long getFollowedId() {
+        return followedId;
     }
-    public void setFollower_id(Long follower_id) {
-        this.followerId = follower_id;
+    public void setFollowedId(Long follower_id) {
+        this.followedId = follower_id;
     }
-    public Long getFollowing_id() {
+    public Long getFollowingId() {
         return followingId;
     }
-    public void setFollowing_id(Long following_id) {
+    public void setFollowingId(Long following_id) {
         this.followingId = following_id;
     }
 }
