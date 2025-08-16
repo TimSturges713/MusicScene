@@ -34,7 +34,7 @@ public class FollowingService {
     public Following findByFollowingAndFollowed(Long followingId, Long followedId){
         List<Following> followObjs = followingRepository.findByFollowingId(followingId);
         for (Following follower : followObjs) {
-            if(follower.getFollowedId() == followedId){
+            if(follower.getFollowedId().equals(followedId)){
                 return follower;
             }
         }

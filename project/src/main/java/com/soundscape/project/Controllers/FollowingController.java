@@ -31,6 +31,8 @@ import com.soundscape.project.Repos.FollowingRepository;
 
 import com.soundscape.project.Services.FollowingService;
 
+
+
 @RestController
 // The following aspect of users
 @RequestMapping(path="/users")
@@ -56,15 +58,27 @@ public class FollowingController {
         return new ResponseEntity<Following>(following, HttpStatus.CREATED);
     }
 
+    /*
+     * Get specific following object
+     */
+    @GetMapping(path="/following/object/{followingId}/{followedId}")
+    public ResponseEntity<Following> getFollowingObject(@PathVariable Long followingId, @PathVariable Long followedId) {
+        Following n = followingService.findByFollowingAndFollowed(followingId, followedId);
+        if(n == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Following>(n, HttpStatus.OK);
+    }
+    
+
     // get the followers of the inputted user
     @GetMapping(path="/followers/{user_id}")
     public ResponseEntity<List<Long>> getFollowers(@PathVariable Long user_id) {
-        
-            List<Long> n = followingService.getFollowers(user_id);
-            if(n == null){ // if there's no followers
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<List<Long>>(n, HttpStatus.OK); 
+        List<Long> n = followingService.getFollowers(user_id);
+        if(n == null){ // if there's no followers
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Long>>(n, HttpStatus.OK); 
     }
 
     // get the following list of the inputted user

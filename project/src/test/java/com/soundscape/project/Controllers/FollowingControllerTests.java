@@ -9,6 +9,7 @@
 package com.soundscape.project.Controllers;
 
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,6 +20,7 @@ import com.soundscape.project.Entities.Following;
 import com.soundscape.project.Repos.FollowingRepository;
 import com.soundscape.project.Services.FollowingService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -178,5 +180,16 @@ public class FollowingControllerTests {
 
         mvc.perform(delete("/users/followers/1/8"))
             .andExpect(status().isNotFound());
+    }
+
+    // Test getFollowingObject()
+    @Test
+    public void testGetFollowingObject() throws Exception {
+        Following following = new Following(1L, 2L);
+        List<Following> test = new ArrayList<Following>();
+        test.add(following);
+        when(followingService.findByFollowingAndFollowed(1L, 2L)).thenReturn(following);
+        mvc.perform(get("/users/following/1/2")).andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(following)));
     }
 }

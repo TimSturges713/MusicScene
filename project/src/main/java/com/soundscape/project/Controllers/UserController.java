@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import com.soundscape.project.Entities.User;
 import com.soundscape.project.Repos.UserRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 // Establishes the http response format for communication with Angular front-end 
@@ -52,7 +54,7 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.CREATED);
     }
 
-    // get user via userId, uses userRepo method that's premade to do this
+    // get user via username, uses userRepo method that's premade to do this
     @GetMapping(path="/{username}")
     public ResponseEntity<User> getUser(@PathVariable String username) {
         
@@ -62,6 +64,16 @@ public class UserController {
             }
             return new ResponseEntity<User>(n, HttpStatus.OK); 
     }
+
+    @GetMapping(path="/id/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
+        User n = userRepository.findByUserId(userId);
+        if(n == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // if the user doesn't exist
+        }
+        return new ResponseEntity<User>(n, HttpStatus.OK);
+    }
+    
 
     // Delete a user via userId, uses a pre-made userRepo method to find user
     @DeleteMapping(path="/{username}")

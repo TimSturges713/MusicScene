@@ -83,6 +83,11 @@ export class UserService {
     );
   }
 
+  getUserById(userId:number){
+    return this.http.get<User>("http://localhost:8080/users/id/" + userId).pipe(tap(_ => this.log.add(`fetched user}`)),
+      catchError(this.handleError<User>(`getUser`)));
+  }
+
   /**
    * Handles HTTP request to get all users.
    * 

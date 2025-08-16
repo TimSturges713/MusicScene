@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgFor } from '@angular/common';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
 import { error } from 'console';
@@ -7,45 +8,71 @@ import { FollowingService } from '../following.service';
 import { User } from '../user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [],
+  imports: [NgFor],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit{
 
   // localstorage stores the username item already via login and we just retrieve it to display on account page
-  username = localStorage.getItem("username") as String;
+  username = localStorage.getItem("username") as string;
 
-  private followUrl = "http://localhost:8080/users/following";
+  
 
+  followers: string[] = [];
+
+  userId = 0;
 
 
   constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, private http: HttpClient){}
   
-  follow(){
-    const username = (document.getElementById("follow") as HTMLInputElement)?.value;
-    
-    this.userService.getUser(username).subscribe((u) =>{
-      if(u == null){
-        this.messageService.add("User not found");
-        return;
-      }
-      var user = u.userId as number;
-      this.userService.getUser(this.username as string).subscribe((u) =>{
-      var me = u.userId as number;
-      this.followingService.followUser(me as number, user as number).subscribe();
-    }
-    );
+  ngOnInit() {
+  this.userService.getUser(this.username).pipe(
+    switchMap(user => {
+      this.userId = user.userId as number;
+      return this.followingService.getFollowers(this.userId);
+    })
+  ).subscribe(followIds => {
+    this.followers = []; // reset array
+    followIds.forEach(id => {
+      this.userService.getUserById(id).subscribe(u => {
+        this.followers.push(u.username);
+      });
     });
-    
-    
-    
-    
-  }
+  });
+}
+
+
+  follow() {
+  const username = (document.getElementById("follow") as HTMLInputElement)?.value;
+
+  this.userService.getUser(username).pipe(
+    switchMap(u => {
+      if (!u) {
+        this.messageService.add("User not found");
+        return of(null);
+      }
+      return this.userService.getUser(this.username).pipe(
+        switchMap(me => this.followingService.getSpecifiedFollowing(me.userId as number, u.userId as number).pipe(
+          switchMap(obj => {
+            if (!obj) {
+              return this.followingService.followUser(me.userId as number, u.userId as number);
+            } else {
+              this.messageService.add("You are already following this user");
+              return of(null);
+            }
+          })
+        ))
+      );
+    })
+  ).subscribe();
+}
+
 
   /**
    * Redirects the user back to the main menu.

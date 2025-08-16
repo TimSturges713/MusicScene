@@ -16,13 +16,12 @@ import com.soundscape.project.Repos.FollowingRepository;
 
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doNothing;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @ExtendWith(MockitoExtension.class)
 public class FollowingServiceTests {
