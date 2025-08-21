@@ -17,35 +17,17 @@ import { switchMap } from 'rxjs';
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
-export class AccountComponent implements OnInit{
+export class AccountComponent{
 
   // localstorage stores the username item already via login and we just retrieve it to display on account page
   username = localStorage.getItem("username") as string;
 
   
 
-  followers: string[] = [];
-
-  userId = 0;
-
 
   constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, private http: HttpClient){}
   
-  ngOnInit() {
-  this.userService.getUser(this.username).pipe(
-    switchMap(user => {
-      this.userId = user.userId as number;
-      return this.followingService.getFollowers(this.userId);
-    })
-  ).subscribe(followIds => {
-    this.followers = []; // reset array
-    followIds.forEach(id => {
-      this.userService.getUserById(id).subscribe(u => {
-        this.followers.push(u.username);
-      });
-    });
-  });
-}
+  
 
 
   follow() {
@@ -71,6 +53,10 @@ export class AccountComponent implements OnInit{
       );
     })
   ).subscribe();
+}
+
+viewFollowers(){
+  this.router.navigateByUrl("/followers");
 }
 
 

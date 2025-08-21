@@ -1,0 +1,5 @@
+<h2>Followers:</h2>
+<ul>
+    <li *ngFor="let follower of followers">{{follower}} <button (click) = "unfollow(follower)">Unfollow</button></li>
+</ul>
+<button (click)="back()">Back</button>

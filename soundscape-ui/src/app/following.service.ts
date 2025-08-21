@@ -51,6 +51,14 @@ export class FollowingService {
     );
   }
 
+  unfollowUser(followingId: number, followedId: number){
+    const follow : Following={
+      followingId: followingId,
+      followedId: followedId
+    }
+    return this.http.delete<Following>('http://localhost:8080/users/followers/' + followingId + '/' + followedId).pipe(tap(_ => this.messageService.add(`Unfollowed User Successfully`)), catchError(this.handleError<Following>('unfollowUser')));
+  }
+
   getFollowers(userId: number){
     return this.http.get<number[]>('http://localhost:8080/users/followers/' + userId).pipe(tap(), catchError(this.handleError<number[]>('getFollowers'))
     );

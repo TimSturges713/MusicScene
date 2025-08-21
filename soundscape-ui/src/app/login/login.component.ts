@@ -22,6 +22,10 @@ export class LoginComponent {
   login(){
     const username = (document.getElementById("username") as HTMLInputElement)?.value;
     const password = (document.getElementById("password") as HTMLInputElement)?.value;
+    if(!username || !password){
+      this.messageService.add("Please enter a username and password");
+      return;
+    }
     this.messageService.add("Logging in user " + username);
     this.userService.login(username, password);
   }
