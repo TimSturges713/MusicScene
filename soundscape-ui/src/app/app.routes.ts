@@ -4,6 +4,7 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountComponent } from './account/account.component';
 import { FollowersComponent } from './followers/followers.component';
+import { FollowingComponent } from './following/following.component';
 
 
 export const routes: Routes = [
@@ -12,5 +13,6 @@ export const routes: Routes = [
   {path: 'main-menu', component: MainMenuComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'account', component: AccountComponent},
-  {path: 'followers', component: FollowersComponent}
+  {path: 'followers', component: FollowersComponent},
+  {path: 'following', component: FollowingComponent}
 ];

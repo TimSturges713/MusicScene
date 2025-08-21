@@ -64,6 +64,11 @@ export class FollowingService {
     );
   }
 
+  getFollowing(userId: number){
+    return this.http.get<number[]>('http://localhost:8080/users/following/' + userId).pipe(tap(), catchError(this.handleError<number[]>('getFollowing'))
+    );
+  }
+
   /**
    * Delete all user records where their UserId appears in following objects, used when deleting an account.
    * @param user the user that we want to wipe off the records.

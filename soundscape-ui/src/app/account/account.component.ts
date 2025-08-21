@@ -28,7 +28,9 @@ export class AccountComponent{
   constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, private http: HttpClient){}
   
   
-
+  viewFollowing(){
+    this.router.navigateByUrl("/following");
+  }
 
   follow() {
   const username = (document.getElementById("follow") as HTMLInputElement)?.value;

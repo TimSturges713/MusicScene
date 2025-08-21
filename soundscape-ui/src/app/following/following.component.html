@@ -1,1 +1,5 @@
-<p>following works!</p>
+<h2>Following:</h2>
+<ul>
+    <li *ngFor="let account of following">{{account}} <button (click)="unfollow(account)">Unfollow</button></li>
+</ul>
+<button (click)="back()">Back</button>
