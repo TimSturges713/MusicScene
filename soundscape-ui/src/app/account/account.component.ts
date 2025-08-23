@@ -9,6 +9,7 @@ import { User } from '../user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs';
+import { SpotifyService } from '../spotify.service';
 
 @Component({
   selector: 'app-account',
@@ -25,11 +26,20 @@ export class AccountComponent{
   
 
 
-  constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, private http: HttpClient){}
+  constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, 
+    private http: HttpClient, private spotifyService: SpotifyService){}
   
   
   viewFollowing(){
     this.router.navigateByUrl("/following");
+  }
+
+  spotifySetup(){
+    this.spotifyService.requestAccountAccess().subscribe((url) =>
+    {
+      
+      window.location.href = url.url;
+    });
   }
 
   follow() {

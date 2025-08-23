@@ -1,0 +1,36 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { MessageService } from './message.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SpotifyService {
+
+  httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+  constructor(private http: HttpClient, private messageService: MessageService) { }
+
+  requestAccountAccess(){
+    return this.http.get<{url:string}>('http://localhost:8080/spotify/login')
+      .pipe(tap(_ => {this.messageService.add("Connected to Spotify")})
+      ,catchError(this.handleError<{url:string}>('requestAccountAccess()')))
+  }
+
+  /**
+     * Handles HTTP operation failures.
+     * Logs the error and allows the app to continue by returning an empty result.
+     * @param operation - Name of the failed operation.
+     * @param result - Optional default result to return.
+     */
+    private handleError<T>(operation = 'operation', result?: T) {
+      return (error: any): Observable<T> => {
+        console.error(error);
+        this.messageService.add(`${operation} failed: ${error.message}`);
+        return of(result as T);
+      };
+    }
+}
