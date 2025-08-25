@@ -103,6 +103,8 @@ public class UserController {
         n.setCity(user.getCity());
         n.setPassword(user.getPassword());
         n.setEmail(user.getEmail());
+        n.setSpotify(user.getSpotify());
+        n.setState(user.getState());
         userRepository.save(n);
         return new ResponseEntity<User>(n, HttpStatus.OK);
     }
@@ -118,6 +120,6 @@ public class UserController {
         }
     }
 
-
+    
 
 }

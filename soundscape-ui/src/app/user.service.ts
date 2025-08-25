@@ -60,6 +60,7 @@ export class UserService {
       localStorage.setItem("username", username);
       
       this.log.add("You have been logged in");
+
       this.router.navigateByUrl('/main-menu');
     });
   }
@@ -98,6 +99,13 @@ export class UserService {
         tap(_ => this.log.add('fetched users')),
         catchError(this.handleError<User[]>('getUsers', []))
       );
+  }
+
+  updateUser(user:User){
+    return this.http.put<User>("http://localhost:8080/users/" + user.username, user, this.httpOptions).pipe(
+      tap(_ => this.log.add('updated user')),
+      catchError(this.handleError<User>('updateUser'))
+    )
   }
 
   /**

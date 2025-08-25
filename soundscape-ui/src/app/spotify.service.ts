@@ -16,7 +16,7 @@ export class SpotifyService {
 
   requestAccountAccess(){
     return this.http.get<{url:string}>('http://localhost:8080/spotify/login')
-      .pipe(tap(_ => {this.messageService.add("Connected to Spotify")})
+      .pipe(tap(_ => {this.messageService.add("Connecting to Spotify...")})
       ,catchError(this.handleError<{url:string}>('requestAccountAccess()')))
   }
 

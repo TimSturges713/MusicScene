@@ -36,6 +36,11 @@ public class User {
     // the email of the user
     private String email;
 
+    // connected to spotify or not
+    private boolean spotify;
+
+    private String state;
+
 
     protected User(){
         
@@ -70,6 +75,12 @@ public class User {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    public String getState() {
+        return state;
+    }
+    public void setState(String state) {
+        this.state = state;
+    }
     public String getUsername() {
         return username;
     }
@@ -87,6 +98,12 @@ public class User {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public boolean getSpotify() {
+        return spotify;
+    }
+    public void setSpotify(boolean spotify) {
+        this.spotify = spotify;
     }
     public String getBio() {
         return bio;

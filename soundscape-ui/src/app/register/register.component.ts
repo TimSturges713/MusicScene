@@ -24,6 +24,8 @@ export class RegisterComponent {
     const email = (document.getElementById("email") as HTMLInputElement)?.value;
     const bio = (document.getElementById("bio") as HTMLInputElement)?.value;
     const city = (document.getElementById("city") as HTMLInputElement)?.value;
+    const state = (document.getElementById("state") as HTMLInputElement)?.value;
+  
     if(username == null || password == null || email == null || city == null){
       this.messageService.add("Please fill out all fields");
       return;
@@ -35,7 +37,7 @@ export class RegisterComponent {
         this.messageService.add("User already exists");
         return;
       }
-      this.userService.addUser({username, bio, city, password, email}).subscribe();
+      this.userService.addUser({username, bio, city, password, email, spotify: false, state: state}).subscribe();
       this.messageService.add("User registered");
       localStorage.setItem("username", username);
       this.router.navigateByUrl('/main-menu');

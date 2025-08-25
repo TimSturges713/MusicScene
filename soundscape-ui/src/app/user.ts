@@ -8,4 +8,6 @@ export interface User {
     city: string;
     password: string;
     email: string;
+    state: string;
+    spotify: boolean;
 }

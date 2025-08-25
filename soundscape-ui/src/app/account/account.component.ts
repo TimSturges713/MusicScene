@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
 import { error } from 'console';
@@ -14,30 +14,48 @@ import { SpotifyService } from '../spotify.service';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
-export class AccountComponent{
+export class AccountComponent implements OnInit{
 
   // localstorage stores the username item already via login and we just retrieve it to display on account page
   username = localStorage.getItem("username") as string;
 
-  
+  connectedToSpotify: boolean = false;
 
 
   constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, 
     private http: HttpClient, private spotifyService: SpotifyService){}
   
-  
+  ngOnInit(){
+    this.userService.getUser(this.username).subscribe((user) => {this.connectedToSpotify = user.spotify;
+      
+    });
+  }
+
   viewFollowing(){
     this.router.navigateByUrl("/following");
   }
 
+
   spotifySetup(){
     this.spotifyService.requestAccountAccess().subscribe((url) =>
     {
-      
+      this.userService.getUser(this.username).subscribe((user) => {
+        var n: User = {
+          userId: user.userId,
+          username: user.username,
+          email: user.email,
+          bio: user.bio,
+          city: user.city,
+          state: user.state,
+          password: user.password,
+          spotify: true
+        }
+      this.userService.updateUser(n).subscribe();
+      });
       window.location.href = url.url;
     });
   }
