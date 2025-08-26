@@ -10,5 +10,8 @@ export interface User {
     email: string;
     state: string;
     spotify: boolean;
-    spotifyId: string;
+    spotifyId: string | null;
+    refreshToken: string;
+    accessToken: string;
+    artistId: string | null;
 }

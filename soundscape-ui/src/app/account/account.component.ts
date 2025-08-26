@@ -25,12 +25,14 @@ export class AccountComponent implements OnInit{
 
   connectedToSpotify: boolean = false;
 
+  artistId: string|null = null;
 
   constructor(private route: ActivatedRoute, private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, 
     private http: HttpClient, private spotifyService: SpotifyService){}
   
   ngOnInit(){
     this.userService.getUser(this.username).subscribe((user) => {this.connectedToSpotify = user.spotify; 
+      this.artistId = user.artistId;
     });
     this.route.queryParams.subscribe(params => {
       if(params["spotifyExist"]){
@@ -41,10 +43,22 @@ export class AccountComponent implements OnInit{
     });
   }
 
+  addArtist(){
+    const artist  = (document.getElementById("artistID") as HTMLInputElement)?.value;
+    this.userService.getUser(this.username).subscribe((user) => {
+      user.artistId = artist;
+      this.userService.updateUser(user).subscribe();
+    });
+    
+  }
+
+  songs(){
+    this.router.navigateByUrl("/songs");
+  }
+
   disconnectSpotify(){
     this.userService.getUser(this.username).subscribe((user) => {
-      user.spotify = false;
-      user.spotifyId = "";
+      user.artistId = null;
       this.userService.updateUser(user).subscribe();
     });
   }
@@ -54,7 +68,7 @@ export class AccountComponent implements OnInit{
 
 
   spotifySetup(){
-    this.spotifyService.requestAccountAccess().subscribe((url) =>
+    this.spotifyService.requestAccountAccessChange().subscribe((url) =>
     {
       window.location.href = url.url;
     }

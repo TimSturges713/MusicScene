@@ -43,6 +43,12 @@ public class User {
 
     private String spotifyId;
 
+    private String refreshToken;
+
+    private String accessToken;
+
+    private String artistId;
+
 
     protected User(){
         
@@ -76,6 +82,12 @@ public class User {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    public String getAccessToken() {
+        return accessToken;
+    }
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
     public String getState() {
         return state;
     }
@@ -88,6 +100,13 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+     
     public String getPassword() {
         return password;
     }
@@ -124,4 +143,12 @@ public class User {
     public void setSpotifyId(String spotifyId) {
         this.spotifyId = spotifyId;
     }
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
 }
+

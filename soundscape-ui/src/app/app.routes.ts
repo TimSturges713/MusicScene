@@ -5,6 +5,8 @@ import { RegisterComponent } from './register/register.component';
 import { AccountComponent } from './account/account.component';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
+import { SongsComponent } from './songs/songs.component';
+import { SpotifyRegisterComponent } from './spotify-register/spotify-register.component';
 
 
 export const routes: Routes = [
@@ -14,5 +16,7 @@ export const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'account', component: AccountComponent},
   {path: 'followers', component: FollowersComponent},
-  {path: 'following', component: FollowingComponent}
+  {path: 'following', component: FollowingComponent},
+  {path: 'songs', component: SongsComponent},
+  {path: 'spotify-register', component: SpotifyRegisterComponent}
 ];

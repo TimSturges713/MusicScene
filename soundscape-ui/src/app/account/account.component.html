@@ -6,13 +6,17 @@
 <br>
 <button (click)="viewFollowing()">View Following</button>
 <br>
-<div *ngIf="!connectedToSpotify">
-    <h2>Are You a Spotify Artist?</h2>
-    <button (click)="spotifySetup()">Connect to Spotify?</button>
+
+<div *ngIf="artistId">
+    <button (click)="songs()">View Songs</button>
+    <br>
+    <button (click)="disconnectSpotify()">Stop Being an Artist?</button>
 </div>
-<div *ngIf="connectedToSpotify">
-    <h2>Connected to Spotify</h2>
-    <button (click)="disconnectSpotify()">Disconnect Spotify</button>
+<button (click)="spotifySetup()">Change Spotify Account?</button>
+<div *ngIf="!artistId">
+    <h2>Are you a Spotify Artist?</h2>
+    <input id= "artistID" placeholder="Enter Artist ID">
+    <button (click)="addArtist()">Become Artist</button>
 </div>
 <br>
 <button (click)="back()">Back</button>

@@ -21,9 +21,11 @@ public class UserService {
     }
 
     @Transactional
-    public void updateSpotify(User u, String spotifyId) {
+    public void updateSpotify(User u, String spotifyId, String accessToken, String refreshToken) {
         u.setSpotifyId(spotifyId);
         u.setSpotify(true);
+        u.setAccessToken(accessToken);
+        u.setRefreshToken(refreshToken);
         userRepository.save(u);
     }
 

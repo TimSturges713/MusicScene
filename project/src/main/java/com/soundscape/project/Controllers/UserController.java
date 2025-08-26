@@ -106,6 +106,9 @@ public class UserController {
         n.setSpotify(user.getSpotify());
         n.setState(user.getState());
         n.setSpotifyId(user.getSpotifyId());
+        n.setAccessToken(user.getAccessToken());
+        n.setRefreshToken(user.getRefreshToken());
+        n.setArtistId(user.getArtistId());
         userRepository.save(n);
         return new ResponseEntity<User>(n, HttpStatus.OK);
     }
