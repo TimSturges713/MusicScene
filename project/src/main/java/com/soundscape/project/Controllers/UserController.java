@@ -105,6 +105,7 @@ public class UserController {
         n.setEmail(user.getEmail());
         n.setSpotify(user.getSpotify());
         n.setState(user.getState());
+        n.setSpotifyId(user.getSpotifyId());
         userRepository.save(n);
         return new ResponseEntity<User>(n, HttpStatus.OK);
     }

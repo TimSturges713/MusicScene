@@ -37,7 +37,7 @@ export class RegisterComponent {
         this.messageService.add("User already exists");
         return;
       }
-      this.userService.addUser({username, bio, city, password, email, spotify: false, state: state}).subscribe();
+      this.userService.addUser({username, bio, city, password, email, spotify: false, state: state, spotifyId: ""}).subscribe();
       this.messageService.add("User registered");
       localStorage.setItem("username", username);
       this.router.navigateByUrl('/main-menu');

@@ -7,10 +7,12 @@
 <button (click)="viewFollowing()">View Following</button>
 <br>
 <div *ngIf="!connectedToSpotify">
+    <h2>Are You a Spotify Artist?</h2>
     <button (click)="spotifySetup()">Connect to Spotify?</button>
 </div>
 <div *ngIf="connectedToSpotify">
     <h2>Connected to Spotify</h2>
+    <button (click)="disconnectSpotify()">Disconnect Spotify</button>
 </div>
 <br>
 <button (click)="back()">Back</button>

@@ -15,10 +15,12 @@ export class SpotifyService {
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
   requestAccountAccess(){
-    return this.http.get<{url:string}>('http://localhost:8080/spotify/login')
+    return this.http.get<{url:string}>('http://localhost:8080/spotify/login?username=' + localStorage.getItem('username'))
       .pipe(tap(_ => {this.messageService.add("Connecting to Spotify...")})
       ,catchError(this.handleError<{url:string}>('requestAccountAccess()')))
   }
+
+  
 
   /**
      * Handles HTTP operation failures.

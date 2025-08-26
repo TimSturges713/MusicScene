@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
@@ -26,15 +26,28 @@ export class AccountComponent implements OnInit{
   connectedToSpotify: boolean = false;
 
 
-  constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, 
+  constructor(private route: ActivatedRoute, private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService, 
     private http: HttpClient, private spotifyService: SpotifyService){}
   
   ngOnInit(){
-    this.userService.getUser(this.username).subscribe((user) => {this.connectedToSpotify = user.spotify;
-      
+    this.userService.getUser(this.username).subscribe((user) => {this.connectedToSpotify = user.spotify; 
+    });
+    this.route.queryParams.subscribe(params => {
+      if(params["spotifyExist"]){
+        if(params["spotifyExist"] == "true"){
+          this.messageService.add("NOTICE: Spotify account already exists with another user.")
+        }
+      }
     });
   }
 
+  disconnectSpotify(){
+    this.userService.getUser(this.username).subscribe((user) => {
+      user.spotify = false;
+      user.spotifyId = "";
+      this.userService.updateUser(user).subscribe();
+    });
+  }
   viewFollowing(){
     this.router.navigateByUrl("/following");
   }
@@ -43,21 +56,12 @@ export class AccountComponent implements OnInit{
   spotifySetup(){
     this.spotifyService.requestAccountAccess().subscribe((url) =>
     {
-      this.userService.getUser(this.username).subscribe((user) => {
-        var n: User = {
-          userId: user.userId,
-          username: user.username,
-          email: user.email,
-          bio: user.bio,
-          city: user.city,
-          state: user.state,
-          password: user.password,
-          spotify: true
-        }
-      this.userService.updateUser(n).subscribe();
-      });
       window.location.href = url.url;
-    });
+    }
+    ,(error) => {
+      this.messageService.add("Spotify account may be already in use by another user.")
+    }
+  );
   }
 
   follow() {

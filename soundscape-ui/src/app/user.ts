@@ -10,4 +10,5 @@ export interface User {
     email: string;
     state: string;
     spotify: boolean;
+    spotifyId: string;
 }

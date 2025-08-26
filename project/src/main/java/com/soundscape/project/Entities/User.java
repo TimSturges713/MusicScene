@@ -41,6 +41,8 @@ public class User {
 
     private String state;
 
+    private String spotifyId;
+
 
     protected User(){
         
@@ -66,7 +68,6 @@ public class User {
         return String.format(
         "User[user_id=%d, username='%s', city='%s', email='%s']", userId, username, city, email);
     }
-
 
     // the getters and setters
     public Long getUserId() {
@@ -117,5 +118,10 @@ public class User {
     public void setCity(String city) {
         this.city = city;
     }
-
+    public String getSpotifyId() {
+        return spotifyId;
+    }
+    public void setSpotifyId(String spotifyId) {
+        this.spotifyId = spotifyId;
+    }
 }
