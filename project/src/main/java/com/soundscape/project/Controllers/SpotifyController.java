@@ -53,16 +53,17 @@ public class SpotifyController {
 
     private static final Dotenv dotenv = Dotenv.load();
 
-    private static final SpotifyApi startSpotifyApi = new SpotifyApi.Builder()
-            .setClientId(dotenv.get("CLIENT_ID"))
-            .setClientSecret(dotenv.get("CLIENT_SECRET"))
-            .setRedirectUri(redirectURI)
-            .build();
+    
 
     @GetMapping("/user-code")
     public ResponseEntity<Map<String,String>> getUserCode(@RequestParam("code") String userCode,@RequestParam("state") String state, HttpServletResponse response){
         code = userCode;
 
+        SpotifyApi startSpotifyApi = new SpotifyApi.Builder()
+            .setClientId(dotenv.get("CLIENT_ID"))
+            .setClientSecret(dotenv.get("CLIENT_SECRET"))
+            .setRedirectUri(redirectURI)
+            .build();
         AuthorizationCodeRequest authorizationCodeRequest = startSpotifyApi.authorizationCode(code)
             .build();
         
@@ -82,7 +83,13 @@ public class SpotifyController {
                 var r = startSpotifyApi.getCurrentUsersProfile().build().execute();
                 User u = userRepository.findByUsername(username);
                 try{
-                    userService.updateSpotify(u, r.getId(), startSpotifyApi.getAccessToken(), startSpotifyApi.getRefreshToken());
+                    userService.updateSpotify(u, r.getId(), authorizationCodeCredentials.getAccessToken(), authorizationCodeCredentials.getRefreshToken());
+                    try {
+                        startSpotifyApi.getCurrentUsersProfile().build().execute();
+                        System.out.println("Token is valid!");
+                    } catch (Exception e) {
+                        return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+                    }
                 }
                 catch (DataIntegrityViolationException e) {
                     
@@ -112,7 +119,7 @@ public class SpotifyController {
         
     }
 
-    @Scheduled(fixedRate = 50 * 60 * 1000) // every 50 mins
+    @Scheduled(fixedRate = 60 * 30 * 1000) // every 30 mins
     public void refreshAllTokens() {
         List<User> users = userRepository.findAll();
         for (User user : users) {
@@ -130,6 +137,7 @@ public class SpotifyController {
                         user.setRefreshToken(creds.getRefreshToken());
                     }
                     userRepository.save(user);
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -140,9 +148,14 @@ public class SpotifyController {
     
     @GetMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestParam("username") String username, @RequestParam("register") String register){
-        
+        SpotifyApi startSpotifyApi = new SpotifyApi.Builder()
+            .setClientId(dotenv.get("CLIENT_ID"))
+            .setClientSecret(dotenv.get("CLIENT_SECRET"))
+            .setRedirectUri(redirectURI)
+            .build();
         AuthorizationCodeUriRequest authorizationCodeUriRequest = startSpotifyApi.authorizationCodeUri()
             .show_dialog(true)
+            .scope("user-read-email user-library-read user-follow-read")
             .state(URLEncoder.encode(username + " " + register, StandardCharsets.UTF_8))
             .build();
         URI uri = authorizationCodeUriRequest.execute();
@@ -166,10 +179,12 @@ public class SpotifyController {
             .build();
         spotifyApi.setAccessToken(userRepository.findByUsername(username).getAccessToken());
         spotifyApi.setRefreshToken(userRepository.findByUsername(username).getRefreshToken());
-
-         GetArtistsAlbumsRequest getArtistsAlbumsRequest = spotifyApi.getArtistsAlbums(userRepository.findByUsername(username).getArtistId()).build();
+         GetArtistsAlbumsRequest getArtistsAlbumsRequest = spotifyApi.getArtistsAlbums("1nJvji2KIlWSseXRSlNYsC")
+         .limit(20).build();
+         
          try{
             Paging<AlbumSimplified> a = getArtistsAlbumsRequest.execute();
+            
             AlbumSimplified[] albums= a.getItems();
             String[] albumIds = new String[albums.length];
             for(int i = 0; i < albums.length; i++){
@@ -187,8 +202,8 @@ public class SpotifyController {
             map.put("albums", albumList.toString());
             return new ResponseEntity<>(map, HttpStatus.OK);
          }catch(Exception e){
-            
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>( HttpStatus.BAD_GATEWAY);
         }
+        
     }
 }

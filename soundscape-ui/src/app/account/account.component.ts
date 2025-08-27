@@ -48,6 +48,7 @@ export class AccountComponent implements OnInit{
     this.userService.getUser(this.username).subscribe((user) => {
       user.artistId = artist;
       this.userService.updateUser(user).subscribe();
+      window.location.reload();
     });
     
   }
@@ -60,7 +61,9 @@ export class AccountComponent implements OnInit{
     this.userService.getUser(this.username).subscribe((user) => {
       user.artistId = null;
       this.userService.updateUser(user).subscribe();
+      window.location.reload();
     });
+    
   }
   viewFollowing(){
     this.router.navigateByUrl("/following");

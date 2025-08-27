@@ -45,6 +45,7 @@ export class FollowingComponent {
       this.userService.getUser(this.username).subscribe(user => {
         this.userService.getUser(username).subscribe(u => {
           this.followingService.unfollowUser(user.userId as number, u.userId as number).subscribe();
+          window.location.reload();
         })
       })
     }
