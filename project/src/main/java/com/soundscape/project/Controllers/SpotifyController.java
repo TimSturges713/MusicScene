@@ -171,7 +171,7 @@ public class SpotifyController {
     }
 
     @GetMapping("/artist-albums")
-    public ResponseEntity<Map<String, String>> getArtistAlbums(@RequestParam("username") String username){
+    public ResponseEntity<Album[]> getArtistAlbums(@RequestParam("username") String username){
          SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(dotenv.get("CLIENT_ID"))
             .setClientSecret(dotenv.get("CLIENT_SECRET"))
@@ -192,15 +192,18 @@ public class SpotifyController {
             }
             
             Album[] fullAlbum = spotifyApi.getSeveralAlbums(albumIds).build().execute();
-            List<String> albumList = new ArrayList<>();
+            List<Album> albumList = new ArrayList<>();
             for(int i = 0; i < fullAlbum.length; i++){
                 if(fullAlbum[i].getAlbumType() == AlbumType.ALBUM){
-                    albumList.add(fullAlbum[i].getName());
+                    albumList.add(fullAlbum[i]);
                 }
             }
-            Map<String, String> map = new HashMap<>();
-            map.put("albums", albumList.toString());
-            return new ResponseEntity<>(map, HttpStatus.OK);
+            Album[] f = new Album[albumList.size()];
+            for(int i = 0; i < albumList.size(); i++){
+                f[i] = albumList.get(i);
+            }
+            
+            return new ResponseEntity<>(f, HttpStatus.OK);
          }catch(Exception e){
             return new ResponseEntity<>( HttpStatus.BAD_GATEWAY);
         }

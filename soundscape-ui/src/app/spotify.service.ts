@@ -4,6 +4,7 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { MessageService } from './message.service';
 import { UserService } from './user.service';
 import { User } from './user';
+import { Album } from './album';
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +30,9 @@ export class SpotifyService {
   }
 
   getAlbums(user: User){
-      return this.http.get<{albums: string}>("http://localhost:8080/spotify/artist-albums?username=" + localStorage.getItem('username')).pipe(
+      return this.http.get<Album[]>("http://localhost:8080/spotify/artist-albums?username=" + localStorage.getItem('username')).pipe(
         tap(_=>{this.messageService.add("Getting albums...")}),
-        catchError(this.handleError<{albums: string}>('getAlbums()'))
+        catchError(this.handleError<Album[]>('getAlbums()'))
       )
     
   }
