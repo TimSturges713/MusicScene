@@ -15,6 +15,7 @@ export class MainMenuComponent {
   // Redirects user to the account details page
   account(){
     this.router.navigateByUrl('/account');
+    this.messageService.clear();
   }
 
   /**

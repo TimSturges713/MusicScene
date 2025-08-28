@@ -52,5 +52,6 @@ export class FollowingComponent {
 
   back(){
     this.router.navigateByUrl('/account');
+    this.messageService.clear();
   }
 }

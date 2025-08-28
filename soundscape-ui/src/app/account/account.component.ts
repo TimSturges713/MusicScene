@@ -67,6 +67,7 @@ export class AccountComponent implements OnInit{
   }
   viewFollowing(){
     this.router.navigateByUrl("/following");
+    this.messageService.clear()
   }
 
 
@@ -108,6 +109,7 @@ export class AccountComponent implements OnInit{
 
 viewFollowers(){
   this.router.navigateByUrl("/followers");
+  this.messageService.clear();
 }
 
 
@@ -116,6 +118,7 @@ viewFollowers(){
    */
   back(){
     this.router.navigateByUrl('/main-menu');
+    this.messageService.clear();
   }
 
   /**

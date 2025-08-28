@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -119,6 +121,12 @@ public class SpotifyController {
         
     }
 
+    @EventListener(ApplicationReadyEvent.class)
+    public void refreshTokensOnStartup() {
+        refreshAllTokens();
+    }
+
+
     @Scheduled(fixedRate = 60 * 30 * 1000) // every 30 mins
     public void refreshAllTokens() {
         List<User> users = userRepository.findAll();
@@ -205,7 +213,33 @@ public class SpotifyController {
             
             return new ResponseEntity<>(f, HttpStatus.OK);
          }catch(Exception e){
-            return new ResponseEntity<>( HttpStatus.BAD_GATEWAY);
+            refreshAllTokens();
+            try{
+                Paging<AlbumSimplified> a = getArtistsAlbumsRequest.execute();
+            
+            AlbumSimplified[] albums= a.getItems();
+            String[] albumIds = new String[albums.length];
+            for(int i = 0; i < albums.length; i++){
+                albumIds[i] = albums[i].getId();
+            }
+            
+            Album[] fullAlbum = spotifyApi.getSeveralAlbums(albumIds).build().execute();
+            List<Album> albumList = new ArrayList<>();
+            for(int i = 0; i < fullAlbum.length; i++){
+                if(fullAlbum[i].getAlbumType() == AlbumType.ALBUM){
+                    albumList.add(fullAlbum[i]);
+                }
+            }
+            Album[] f = new Album[albumList.size()];
+            for(int i = 0; i < albumList.size(); i++){
+                f[i] = albumList.get(i);
+            }
+            
+            return new ResponseEntity<>(f, HttpStatus.OK);
+            }
+            catch(Exception f){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }
         
     }

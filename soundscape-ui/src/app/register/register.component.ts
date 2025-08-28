@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit{
 
   back(){
     this.router.navigateByUrl('/login');
+    this.messageService.clear();
   }
 
   register(){

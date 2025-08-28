@@ -7,6 +7,7 @@ import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { SongsComponent } from './songs/songs.component';
 import { SpotifyRegisterComponent } from './spotify-register/spotify-register.component';
+import { AlbumTracksComponent } from './album-tracks/album-tracks.component';
 
 
 export const routes: Routes = [
@@ -18,5 +19,7 @@ export const routes: Routes = [
   {path: 'followers', component: FollowersComponent},
   {path: 'following', component: FollowingComponent},
   {path: 'songs', component: SongsComponent},
-  {path: 'spotify-register', component: SpotifyRegisterComponent}
+  {path: 'spotify-register', component: SpotifyRegisterComponent},
+  {path: 'album-tracks', component: AlbumTracksComponent}
+
 ];
