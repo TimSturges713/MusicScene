@@ -1,5 +1,7 @@
 <div>
-    <p>{{tracks}}</p>
+    <div *ngFor="let track of tracks">
+        <li>{{track}}</li>
+    </div>
     <br>
     <button (click) = "back()">Back</button>
 </div>

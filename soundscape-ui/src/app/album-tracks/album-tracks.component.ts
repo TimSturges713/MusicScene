@@ -11,16 +11,25 @@ import { NgFor } from '@angular/common';
 })
 export class AlbumTracksComponent implements OnInit{
 
-  tracks: string = "";
+  tracks: string[] = [];
+  l: number = 0;
 
   constructor(private router: Router){}
 
   ngOnInit(){
-    this.tracks = localStorage.getItem("tracks") as string;
+    var length = localStorage.getItem("length");
+    this.l = Number(length);
+    for(var i = 0; i < this.l; i++){
+      
+      this.tracks.push(localStorage.getItem("track " + i) as string);
+    }
   }
 
   back(){
     this.router.navigateByUrl("/songs");
-    localStorage.removeItem("tracks");
+    for(let i = 0; i < this.l; i++){
+      localStorage.removeItem("track " + i);
+    }
+    localStorage.removeItem("length");
   }
 }

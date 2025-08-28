@@ -33,7 +33,10 @@ export class SongsComponent implements OnInit{
   }
 
   getTracks(tracks: string[]){
-    localStorage.setItem("tracks", JSON.stringify(tracks));
+    for(let i = 0; i < tracks.length; i++){
+    localStorage.setItem("track " + i, tracks[i]);
+    }
+    localStorage.setItem("length", tracks.length.toString());
     this.router.navigateByUrl("/album-tracks");
     this.messageService.clear();
   }
