@@ -18,6 +18,11 @@ export class MainMenuComponent {
     this.messageService.clear();
   }
 
+  searchProfiles(){
+    this.router.navigateByUrl('/search-profiles');
+    this.messageService.clear();
+  }
+
   /**
    * Logs the user out 
    */

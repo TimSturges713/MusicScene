@@ -8,6 +8,7 @@ import { FollowingComponent } from './following/following.component';
 import { SongsComponent } from './songs/songs.component';
 import { SpotifyRegisterComponent } from './spotify-register/spotify-register.component';
 import { AlbumTracksComponent } from './album-tracks/album-tracks.component';
+import { SearchProfilesComponent } from './search-profiles/search-profiles.component';
 
 
 export const routes: Routes = [
@@ -20,6 +21,6 @@ export const routes: Routes = [
   {path: 'following', component: FollowingComponent},
   {path: 'songs', component: SongsComponent},
   {path: 'spotify-register', component: SpotifyRegisterComponent},
-  {path: 'album-tracks', component: AlbumTracksComponent}
-
+  {path: 'album-tracks', component: AlbumTracksComponent},
+  {path: 'search-profiles', component: SearchProfilesComponent}
 ];
