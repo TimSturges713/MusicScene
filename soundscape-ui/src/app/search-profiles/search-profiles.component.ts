@@ -32,44 +32,27 @@ export class SearchProfilesComponent {
           this.messageService.add("User not found");
           return of(null);
         }
-        return this.userService.getUser(this.username).pipe(
-          switchMap(me => this.followingService.getSpecifiedFollowing(me.userId as number, u.userId as number).pipe(
-            switchMap(obj => {
-              if (!obj) {
-                return this.followingService.followUser(me.userId as number, u.userId as number);
-              } else {
-                this.messageService.add("You are already following this user");
-                return of(null);
-              }
-            })
-          ))
-        );
+        localStorage.setItem('other_username', u.username as string);
+        localStorage.setItem('bio', u.bio as string);
+        localStorage.setItem('city', u.city as string);
+        localStorage.setItem('state', u.state);
+        if(u.artistId){
+          localStorage.setItem('artistId', u.artistId as string);
+        }
+        this.followingService.getFollowers(u.userId as number).subscribe((followers) =>{
+          localStorage.setItem("followers_length", followers.length.toString());
+          for(let i = 0; i < followers.length; i++){
+            this.userService.getUserById(followers[i]).subscribe((follower) => {
+              localStorage.setItem("follower " + i, follower.username as string);
+            });
+          }
+        });
+        
+        this.router.navigateByUrl('/profile');
+        return of(null);
       })
     ).subscribe();
   }
 
-    follow() {
-    const username = (document.getElementById("follow") as HTMLInputElement)?.value;
-  
-    this.userService.getUser(username).pipe(
-      switchMap(u => {
-        if (!u) {
-          this.messageService.add("User not found");
-          return of(null);
-        }
-        return this.userService.getUser(this.username).pipe(
-          switchMap(me => this.followingService.getSpecifiedFollowing(me.userId as number, u.userId as number).pipe(
-            switchMap(obj => {
-              if (!obj) {
-                return this.followingService.followUser(me.userId as number, u.userId as number);
-              } else {
-                this.messageService.add("You are already following this user");
-                return of(null);
-              }
-            })
-          ))
-        );
-      })
-    ).subscribe();
-  }
+    
 }

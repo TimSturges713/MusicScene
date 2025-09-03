@@ -1,0 +1,17 @@
+<h2>{{username}}</h2> 
+<div *ngIf="!following">
+<button (click)="follow()">Follow</button>
+</div>
+<div *ngIf="following">
+    <button (click)="unfollow()">Unfollow</button>
+</div>
+
+<h3>{{bio}}</h3>
+<h4>From {{city}}, {{state}}</h4>
+
+
+<button >Followers</button>
+<br>
+<button >Following</button>
+<br>
+<button (click)="back()">Back</button>

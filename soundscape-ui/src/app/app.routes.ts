@@ -9,6 +9,7 @@ import { SongsComponent } from './songs/songs.component';
 import { SpotifyRegisterComponent } from './spotify-register/spotify-register.component';
 import { AlbumTracksComponent } from './album-tracks/album-tracks.component';
 import { SearchProfilesComponent } from './search-profiles/search-profiles.component';
+import { ViewAccountComponent } from './view-account/view-account.component';
 
 
 export const routes: Routes = [
@@ -22,5 +23,6 @@ export const routes: Routes = [
   {path: 'songs', component: SongsComponent},
   {path: 'spotify-register', component: SpotifyRegisterComponent},
   {path: 'album-tracks', component: AlbumTracksComponent},
-  {path: 'search-profiles', component: SearchProfilesComponent}
+  {path: 'search-profiles', component: SearchProfilesComponent},
+  {path: 'profile', component: ViewAccountComponent}
 ];
