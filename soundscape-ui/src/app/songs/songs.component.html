@@ -1,7 +1,6 @@
 <h1>Albums</h1>
 <div *ngFor="let album of albumTracks | keyvalue: originalOrder">
   <button (click)="getTracks(album.value)">{{ album.key }}</button>
-  
 </div>
 <br>
 <button (click)="back()">Back</button>

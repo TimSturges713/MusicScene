@@ -5,6 +5,7 @@ import { UserService } from '../user.service';
 import { FollowingService } from '../following.service';
 import { MessageService } from '../message.service';
 import { switchMap } from 'rxjs';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -16,15 +17,23 @@ import { switchMap } from 'rxjs';
 })
 export class FollowingComponent {
 
-  username = localStorage.getItem("username") as string;
+  username = "";
 
   userId = 0;
 
   following: string[] = [];
+  indicator = localStorage.getItem("indicator");
 
-  constructor(private router: Router, private userService: UserService, private followingService: FollowingService, private messageService: MessageService){}
+
+  constructor(private location: Location, private router: Router, private userService: UserService, private followingService: FollowingService, private messageService: MessageService){}
 
   ngOnInit() {
+      if(this.indicator){
+        this.username = localStorage.getItem("other_username") as string;
+      }
+      else{
+        this.username = localStorage.getItem("username") as string;
+      }
       this.userService.getUser(this.username).pipe(
         switchMap(user => {
           this.userId = user.userId as number;
@@ -51,7 +60,8 @@ export class FollowingComponent {
     }
 
   back(){
-    this.router.navigateByUrl('/account');
+    this.location.back();
+    localStorage.removeItem("indicator");
     this.messageService.clear();
   }
 }

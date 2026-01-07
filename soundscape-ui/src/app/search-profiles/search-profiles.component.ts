@@ -39,14 +39,6 @@ export class SearchProfilesComponent {
         if(u.artistId){
           localStorage.setItem('artistId', u.artistId as string);
         }
-        this.followingService.getFollowers(u.userId as number).subscribe((followers) =>{
-          localStorage.setItem("followers_length", followers.length.toString());
-          for(let i = 0; i < followers.length; i++){
-            this.userService.getUserById(followers[i]).subscribe((follower) => {
-              localStorage.setItem("follower " + i, follower.username as string);
-            });
-          }
-        });
         
         this.router.navigateByUrl('/profile');
         return of(null);

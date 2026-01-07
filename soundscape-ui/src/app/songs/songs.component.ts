@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Album, PagingObject, SimplifiedTrack } from '../album';
 import { NgFor } from '@angular/common';
 import { KeyValuePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-songs',
@@ -16,11 +17,12 @@ import { KeyValuePipe } from '@angular/common';
 })
 export class SongsComponent implements OnInit{
 
+  cacheIndicator: boolean = false;
   albumNames: string[] = [];
   originalOrder = () => 0;
   albumTracks: Map<string, string[]> = new Map<string, string[]>();
 
-  constructor(private router: Router,private spotifyService: SpotifyService, private userService: UserService, private messageService: MessageService){};
+  constructor(private route: ActivatedRoute, private router: Router,private spotifyService: SpotifyService, private userService: UserService, private messageService: MessageService){};
 
   ngOnInit(): void {
     this.messageService.add("Loading Page...")
@@ -42,11 +44,19 @@ export class SongsComponent implements OnInit{
   }
 
   getAlbums(){
-    this.userService.getUser(localStorage.getItem("username") as string).subscribe((user) => {
+    if(localStorage.getItem("album 1") != null){
+      let length = Number(localStorage.getItem("aLength"));
+      for(let i = 0; i < length; i++){
+        
+      }
+    }
+    else{
+      this.userService.getUser(localStorage.getItem("username") as string).subscribe((user) => {
       this.spotifyService.getAlbums(user).subscribe((albums) => {
-
+        localStorage.setItem("aLength", String(albums.length));
         for(let i = 0; i < albums.length; i++){
           
+          localStorage.setItem("album " + i, albums[i].name);
           
           this.albumTracks.set(
             albums[i].name,
@@ -55,5 +65,6 @@ export class SongsComponent implements OnInit{
         }
       })
     })
+  }
   }
 }

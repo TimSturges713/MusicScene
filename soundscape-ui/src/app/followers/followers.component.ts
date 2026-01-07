@@ -8,6 +8,7 @@ import { User } from '../user';
 import { MessageService } from '../message.service';
 import { Router } from '@angular/router';
 import { OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-followers',
@@ -22,11 +23,19 @@ export class FollowersComponent implements OnInit{
 
   followers: string[] = [];
 
+  indicator = "";
+
   userId = 0;
 
-  constructor(private userService: UserService, private followingService: FollowingService, private messageService: MessageService, private router: Router) {}
+  constructor(private location: Location, private userService: UserService, private followingService: FollowingService, private messageService: MessageService, private router: Router) {}
 
   ngOnInit() {
+    if(this.indicator){
+        this.username = localStorage.getItem("other_username") as string;
+      }
+      else{
+        this.username = localStorage.getItem("username") as string;
+      }
     this.userService.getUser(this.username).pipe(
       switchMap(user => {
         this.userId = user.userId as number;
@@ -55,7 +64,8 @@ export class FollowersComponent implements OnInit{
    * Redirects the user back to the main menu.
    */
   back(){
-    this.router.navigateByUrl('/account');
+    localStorage.removeItem("indicator");
+    this.location.back();
   }
   
     follow() {

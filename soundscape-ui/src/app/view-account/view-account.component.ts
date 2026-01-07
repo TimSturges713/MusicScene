@@ -29,6 +29,11 @@ export class ViewAccountComponent implements OnInit{
   following = false;
 
   ngOnInit(){
+    var tmp = localStorage.getItem("tmp");
+    if(tmp){
+      localStorage.setItem("username", tmp);
+      localStorage.removeItem("tmp");
+    }
     this.username = localStorage.getItem("other_username") as string;
     this.bio = localStorage.getItem("bio") as string;
     this.city = localStorage.getItem("city") as string;
@@ -55,6 +60,18 @@ export class ViewAccountComponent implements OnInit{
     
   }
 
+  navi_following(){
+    localStorage.setItem("indicator", "true");
+    
+    this.router.navigateByUrl("/following");
+  }
+
+  followers(){
+    localStorage.setItem("indicator", "true");
+   
+    this.router.navigateByUrl("/followers");
+  }
+
   unfollow(){
       const username = this.username;
       
@@ -69,7 +86,6 @@ export class ViewAccountComponent implements OnInit{
 
   follow() {
     const username = this.username;
-  
     this.userService.getUser(username).pipe(
       switchMap(u => {
         if (!u) {
@@ -101,11 +117,7 @@ export class ViewAccountComponent implements OnInit{
     localStorage.removeItem("city");
     localStorage.removeItem("state");
     localStorage.removeItem("artist_id");
-    var length = parseInt(localStorage.getItem("followers_length") as string);
-    for(let i = 0; i < length; i++){
-      localStorage.removeItem("follower" + i);
-    }
-    localStorage.removeItem("followers_length");
+    
     this.router.navigateByUrl("/search-profiles");
     
   }
