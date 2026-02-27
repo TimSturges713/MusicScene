@@ -19,21 +19,21 @@ import { Location } from '@angular/common';
 })
 export class FollowersComponent implements OnInit{
 
-  username = localStorage.getItem("username") as string;
+  username = "";
 
   followers: string[] = [];
 
-  indicator = "";
+  indicator = localStorage.getItem("indicator");
 
   userId = 0;
 
   constructor(private location: Location, private userService: UserService, private followingService: FollowingService, private messageService: MessageService, private router: Router) {}
 
   ngOnInit() {
-    if(this.indicator){
+    if(this.indicator){ // if theres an indicator, this is someone else's account, not the logged in one, searched for, use that username, not the logged in user
         this.username = localStorage.getItem("other_username") as string;
       }
-      else{
+      else{ // this is your account, continue with your username
         this.username = localStorage.getItem("username") as string;
       }
     this.userService.getUser(this.username).pipe(
@@ -64,11 +64,11 @@ export class FollowersComponent implements OnInit{
    * Redirects the user back to the main menu.
    */
   back(){
-    localStorage.removeItem("indicator");
+    localStorage.removeItem("indicator"); // reset other user indicator
     this.location.back();
   }
   
-    follow() {
+  follow() {
     const username = (document.getElementById("follow") as HTMLInputElement)?.value;
   
     this.userService.getUser(username).pipe(

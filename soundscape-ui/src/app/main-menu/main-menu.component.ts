@@ -30,5 +30,18 @@ export class MainMenuComponent {
     localStorage.removeItem("username");
     this.router.navigateByUrl('/login');
     this.messageService.add("Logged out");
+    let numofAlbums = Number(localStorage.getItem("aLength"));
+    if(!numofAlbums){
+      return;
+    }
+    for(let i = 0; i < numofAlbums; i++){
+      let numofTracks = Number(localStorage.getItem("album " + i + " len"));
+      for(let j = 0; j < numofTracks; j++){
+        localStorage.removeItem("track " + i + " " + j)
+      }
+      localStorage.removeItem("album " + i);
+      localStorage.removeItem("album " + i + "len");
+    }
+    localStorage.removeItem("aLength");
   }
 }

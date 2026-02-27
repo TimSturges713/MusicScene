@@ -187,6 +187,7 @@ public class SpotifyController {
             .build();
         spotifyApi.setAccessToken(userRepository.findByUsername(username).getAccessToken());
         spotifyApi.setRefreshToken(userRepository.findByUsername(username).getRefreshToken());
+        
          GetArtistsAlbumsRequest getArtistsAlbumsRequest = spotifyApi.getArtistsAlbums(userRepository.findByUsername(username).getArtistId())
          .limit(20).build();
          

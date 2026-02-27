@@ -12,24 +12,26 @@ import { NgFor } from '@angular/common';
 export class AlbumTracksComponent implements OnInit{
 
   tracks: string[] = [];
-  l: number = 0;
+  numOfTracks: number = 0;
+  
 
   constructor(private router: Router){}
 
   ngOnInit(){
-    var length = localStorage.getItem("length");
-    this.l = Number(length);
-    for(var i = 0; i < this.l; i++){
-      
-      this.tracks.push(localStorage.getItem("track " + i) as string);
+    
+    var length = localStorage.getItem("length");  // retrieve numOfTracks from album page
+    this.numOfTracks = Number(length);  
+    for(var i = 0; i < this.numOfTracks; i++){
+      this.tracks.push(localStorage.getItem("track " + i) as string); // add track names to global list so HTML can display them
     }
   }
 
   back(){
-    this.router.navigateByUrl("/songs");
-    for(let i = 0; i < this.l; i++){
+    for(let i = 0; i < this.numOfTracks; i++){  // iterate through tracks in cache to reset it for another album
       localStorage.removeItem("track " + i);
     }
-    localStorage.removeItem("length");
+    localStorage.removeItem("length");  // reset length in cache for the next album to be selected
+    this.router.navigateByUrl("/songs");
+    
   }
 }

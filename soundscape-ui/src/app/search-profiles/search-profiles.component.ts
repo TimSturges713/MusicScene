@@ -5,6 +5,7 @@ import { FollowingService } from '../following.service';
 import { switchMap } from 'rxjs';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-search-profiles',
@@ -18,6 +19,10 @@ export class SearchProfilesComponent {
   username = localStorage.getItem("username") as string;
 
   constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService){}
+
+  ngOnInit(): void{
+
+  }
 
   back(){
     this.router.navigateByUrl('/main-menu');

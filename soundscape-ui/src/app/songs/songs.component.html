@@ -1,6 +1,8 @@
 <h1>Albums</h1>
 <div *ngFor="let album of albumTracks | keyvalue: originalOrder">
+  <!---album.value is the list of tracks, button is just the album name-->
   <button (click)="getTracks(album.value)">{{ album.key }}</button>
+  <!---when seeing track page, getTracks(listOfTracks) just displays them, passing to next page via localStorage-->
 </div>
 <br>
-<button (click)="back()">Back</button>
+<button (click)="back()">Back</button> 

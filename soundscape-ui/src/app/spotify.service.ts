@@ -29,8 +29,15 @@ export class SpotifyService {
       ,catchError(this.handleError<{url:string}>('requestAccountAccess()')))
   }
 
-  getAlbums(user: User){
-      return this.http.get<Album[]>("http://localhost:8080/spotify/artist-albums?username=" + localStorage.getItem('username')).pipe(
+  getAlbums(user: User, otherUsersAlbum: string){
+    let username = "";
+    if(otherUsersAlbum == "true"){
+      username = localStorage.getItem("other_username") as string;
+    }
+    else{
+      username = localStorage.getItem("username") as string;
+    }
+      return this.http.get<Album[]>("http://localhost:8080/spotify/artist-albums?username=" + username).pipe(
         tap(_=>{this.messageService.add("Getting albums...")}),
         catchError(this.handleError<Album[]>('getAlbums()'))
       )

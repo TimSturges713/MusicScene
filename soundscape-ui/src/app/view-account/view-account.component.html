@@ -1,4 +1,5 @@
 <h2>{{username}}</h2> 
+
 <div *ngIf="!following">
 <button (click)="follow()">Follow</button>
 </div>
@@ -8,8 +9,10 @@
 
 <h3>{{bio}}</h3>
 <h4>From {{city}}, {{state}}</h4>
-
-
+<div  *ngIf="artistId">
+<button (click)="getMusic()">View Music</button>
+</div>
+<br>
 <button (click)="followers()">Followers</button>
 <br>
 <button (click)="navi_following()">Following</button>

@@ -38,14 +38,8 @@ export class ViewAccountComponent implements OnInit{
     this.bio = localStorage.getItem("bio") as string;
     this.city = localStorage.getItem("city") as string;
     this.state = localStorage.getItem("state") as string;
-    var test = localStorage.getItem("artist_id") as string;
-    if(!test){
-      this.checkArtistId = false;
-    }
-    else{
-      this.checkArtistId = true;
-      this.artistId = test;
-    }
+    this.artistId = localStorage.getItem("artistId") as string;
+    
     this.userService.getUser(this.username).subscribe(u => {
       this.userService.getUser(localStorage.getItem("username") as string).subscribe(me => {
         this.followingService.getSpecifiedFollowing(me.userId as number, u.userId as number).subscribe(obj => {
@@ -60,15 +54,20 @@ export class ViewAccountComponent implements OnInit{
     
   }
 
+  getMusic(){
+    localStorage.setItem("otherUsersAlbum", "true"); // lets the album page know this is another users albums, not their own, true is true, null is false
+    this.router.navigateByUrl("/songs"); // navigate to the album page
+  }
+
   navi_following(){
-    localStorage.setItem("indicator", "true");
+    localStorage.setItem("indicator", "true"); // indicate to the following page that this is a different user than the one signed in
     
     this.router.navigateByUrl("/following");
   }
 
   followers(){
-    localStorage.setItem("indicator", "true");
-   
+    localStorage.setItem("indicator", "true"); // indicate to the followers page that this is a different user than the one signed in
+  
     this.router.navigateByUrl("/followers");
   }
 
@@ -116,7 +115,23 @@ export class ViewAccountComponent implements OnInit{
     localStorage.removeItem("bio");
     localStorage.removeItem("city");
     localStorage.removeItem("state");
-    localStorage.removeItem("artist_id");
+    localStorage.removeItem("artistId");
+
+    if(localStorage.getItem("viewedByAnother") == "true"){ // if you viewed this persons music, clear the cache
+      let numofAlbums = Number(localStorage.getItem("aLength"));
+    if(!numofAlbums){
+      return;
+    }
+    for(let i = 0; i < numofAlbums; i++){
+      let numofTracks = Number(localStorage.getItem("album " + i + " len"));
+      for(let j = 0; j < numofTracks; j++){
+        localStorage.removeItem("track " + i + " " + j)
+      }
+      localStorage.removeItem("album " + i);
+      localStorage.removeItem("album " + i + "len");
+    }
+    localStorage.removeItem("aLength");
+    }
     
     this.router.navigateByUrl("/search-profiles");
     

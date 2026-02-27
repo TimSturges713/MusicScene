@@ -29,6 +29,9 @@ public class UserService {
         userRepository.save(u);
     }
 
+    public void updateArtistId(User u, String artistId){
+        u.setArtistId(artistId);
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
