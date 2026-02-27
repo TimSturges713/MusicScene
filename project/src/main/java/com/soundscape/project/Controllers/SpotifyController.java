@@ -188,25 +188,28 @@ public class SpotifyController {
         spotifyApi.setAccessToken(userRepository.findByUsername(username).getAccessToken());
         spotifyApi.setRefreshToken(userRepository.findByUsername(username).getRefreshToken());
         
-         GetArtistsAlbumsRequest getArtistsAlbumsRequest = spotifyApi.getArtistsAlbums(userRepository.findByUsername(username).getArtistId())
-         .limit(20).build();
          
+         int total = 0;
+         int offset = 0;
          try{
-            Paging<AlbumSimplified> a = getArtistsAlbumsRequest.execute();
-            
-            AlbumSimplified[] albums= a.getItems();
-            String[] albumIds = new String[albums.length];
-            for(int i = 0; i < albums.length; i++){
-                albumIds[i] = albums[i].getId();
-            }
-            
-            Album[] fullAlbum = spotifyApi.getSeveralAlbums(albumIds).build().execute();
             List<Album> albumList = new ArrayList<>();
-            for(int i = 0; i < fullAlbum.length; i++){
-                if(fullAlbum[i].getAlbumType() == AlbumType.ALBUM){
-                    albumList.add(fullAlbum[i]);
+            do{
+                Paging<AlbumSimplified> a = spotifyApi.getArtistsAlbums(userRepository.findByUsername(username).getArtistId()).include_groups("album")
+         .limit(20).offset(offset).build().execute();
+                total = a.getTotal();
+                AlbumSimplified[] albums= a.getItems();
+                String[] albumIds = new String[albums.length];
+                for(int i = 0; i < albums.length; i++){
+                    albumIds[i] = albums[i].getId();
                 }
-            }
+            
+                Album[] fullAlbum = spotifyApi.getSeveralAlbums(albumIds).build().execute();
+            
+                for(int i = 0; i < fullAlbum.length; i++){
+                    albumList.add(fullAlbum[i]);
+                } 
+                offset += 20;
+            } while(offset < total);
             Album[] f = new Album[albumList.size()];
             for(int i = 0; i < albumList.size(); i++){
                 f[i] = albumList.get(i);
@@ -214,9 +217,14 @@ public class SpotifyController {
             
             return new ResponseEntity<>(f, HttpStatus.OK);
          }catch(Exception e){
+            
             refreshAllTokens();
             try{
-                Paging<AlbumSimplified> a = getArtistsAlbumsRequest.execute();
+                List<Album> albumList = new ArrayList<>();
+                do{
+                Paging<AlbumSimplified> a = spotifyApi.getArtistsAlbums(userRepository.findByUsername(username).getArtistId()).include_groups("album")
+         .limit(20).offset(offset).build().execute();
+         total = a.getTotal();
             
             AlbumSimplified[] albums= a.getItems();
             String[] albumIds = new String[albums.length];
@@ -225,12 +233,11 @@ public class SpotifyController {
             }
             
             Album[] fullAlbum = spotifyApi.getSeveralAlbums(albumIds).build().execute();
-            List<Album> albumList = new ArrayList<>();
+            offset += 20;
             for(int i = 0; i < fullAlbum.length; i++){
-                if(fullAlbum[i].getAlbumType() == AlbumType.ALBUM){
-                    albumList.add(fullAlbum[i]);
-                }
+                albumList.add(fullAlbum[i]);
             }
+        } while(offset<total);
             Album[] f = new Album[albumList.size()];
             for(int i = 0; i < albumList.size(); i++){
                 f[i] = albumList.get(i);
