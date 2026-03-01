@@ -3,11 +3,15 @@ import { UserService } from '../user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from '../message.service';
 import { Router } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider'
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [HttpClientModule, MatDividerModule, MatCardModule, MatInputModule, MatFormFieldModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

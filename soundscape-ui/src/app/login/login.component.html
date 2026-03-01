@@ -1,13 +1,42 @@
-<h1>Login:</h1>
-<div>
-    <input id= "username" type="text" placeholder="Username">
-    <br>
-    <input id ="password" type="text" placeholder="Password">
-    <br>
-    <button (click)="login()">Login</button>
-</div>
-<div>
-    <h2>Don't have an account?</h2>
-    
-    <button (click)="register()">Register</button>
+<div class="login-container">
+  <mat-card class="login-card">
+
+    <mat-card-header>
+      <mat-card-title>Welcome Back</mat-card-title>
+      <mat-card-subtitle>Login to your account</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <form class="login-form">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" id="username">
+          
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" id="password">
+          
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="button" class="login-button" (click)="login()">
+          Login
+        </button>
+
+      </form>
+
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions class="register-section">
+      <span>Don't have an account?</span>
+      <button mat-button color="accent" (click)="register()">Register</button>
+    </mat-card-actions>
+
+  </mat-card>
+  
 </div>

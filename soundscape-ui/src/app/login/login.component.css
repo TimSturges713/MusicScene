@@ -1,0 +1,63 @@
+/* Full screen center layout */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Subtle gradient background */
+  background: linear-gradient(135deg, #1db954, #191414);
+}
+
+/* Card styling */
+.login-card {
+  width: 400px;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Title styling */
+mat-card-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+mat-card-subtitle {
+  margin-bottom: 10px;
+}
+
+/* Form spacing */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+/* Make inputs full width */
+.full-width {
+  width: 100%;
+}
+
+/* Login button styling */
+.login-button {
+  height: 45px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* Register section */
+.register-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+}
+
+/* Hover effect */
+button:hover {
+  transform: translateY(-2px);
+  transition: 0.2s ease-in-out;
+}
