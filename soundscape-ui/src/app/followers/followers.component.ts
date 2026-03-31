@@ -8,12 +8,13 @@ import { User } from '../user';
 import { MessageService } from '../message.service';
 import { Router } from '@angular/router';
 import { OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-followers',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf, MatButtonModule],
   templateUrl: './followers.component.html',
   styleUrl: './followers.component.css'
 })

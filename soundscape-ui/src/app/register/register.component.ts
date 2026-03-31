@@ -3,11 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../message.service';
 import { UserService } from '../user.service';
 import { SpotifyService } from '../spotify.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [],
+  imports: [MatInputModule, MatFormFieldModule, MatCardModule, MatDividerModule, MatButtonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

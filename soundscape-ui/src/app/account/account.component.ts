@@ -10,11 +10,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs';
 import { SpotifyService } from '../spotify.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, MatButtonModule, MatDividerModule, MatFormFieldModule, MatInputModule],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
@@ -54,6 +58,7 @@ export class AccountComponent implements OnInit{
   }
 
   songs(){
+    localStorage.removeItem("otherUsersAlbum");
     this.router.navigateByUrl("/songs");
   }
 

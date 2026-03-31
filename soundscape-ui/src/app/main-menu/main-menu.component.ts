@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from '../message.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-main-menu',
   standalone: true,
-  imports: [],
+  imports: [MatButtonModule],
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.css'
 })

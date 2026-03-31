@@ -1,10 +1,25 @@
-<h2>Following:</h2>
-<ul>
-    <div *ngIf="!indicator">
-        <li *ngFor="let account of following">{{account}} <button (click)="unfollow(account)">Unfollow</button></li>
+<div class="content-page">
+  <div class="page-inner">
+
+    <div class="page-header">
+      <button mat-button class="btn-back" (click)="back()">← Back</button>
+      <h1 class="page-title">Following</h1>
     </div>
-    <div *ngIf="indicator">
-        <li *ngFor="let account of following">{{account}}</li>
-    </div>
-</ul>
-<button (click)="back()">Back</button>
+
+    <ul class="user-list">
+      <ng-container *ngIf="!indicator">
+        <li class="user-list-item" *ngFor="let account of following">
+          <span>{{account}}</span>
+          <button mat-button class="btn-danger unfollow-btn" (click)="unfollow(account)">Unfollow</button>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="indicator">
+        <li class="user-list-item" *ngFor="let account of following">
+          <span>{{account}}</span>
+        </li>
+      </ng-container>
+    </ul>
+    <p class="empty-state" *ngIf="following.length === 0">Not following anyone yet.</p>
+
+  </div>
+</div>

@@ -1,5 +1,17 @@
-<h2>Followers:</h2>
-<ul>
-    <li *ngFor="let follower of followers">{{follower}}</li>
-</ul>
-<button (click)="back()">Back</button>
+<div class="content-page">
+  <div class="page-inner">
+
+    <div class="page-header">
+      <button mat-button class="btn-back" (click)="back()">← Back</button>
+      <h1 class="page-title">Followers</h1>
+    </div>
+
+    <ul class="user-list">
+      <li class="user-list-item" *ngFor="let follower of followers">
+        <span>{{follower}}</span>
+      </li>
+    </ul>
+    <p class="empty-state" *ngIf="followers.length === 0">No followers yet.</p>
+
+  </div>
+</div>

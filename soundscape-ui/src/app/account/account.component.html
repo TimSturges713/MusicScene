@@ -1,22 +1,50 @@
-<h1>{{username}}</h1>
+<div class="content-page">
+  <div class="page-inner">
 
-<button (click)="viewFollowers()">View Followers</button>
-<br>
-<button (click)="viewFollowing()">View Following</button>
-<br>
+    <div class="page-header">
+      <button mat-button class="btn-back" (click)="back()">← Back</button>
+      <h1 class="page-title">My Account</h1>
+    </div>
 
-<div *ngIf="artistId">
-    <button (click)="songs()">View Your Music</button>
-    <br>
-    <button (click)="disconnectSpotify()">Stop Being an Artist?</button>
+    <div class="account-username">{{username}}</div>
+
+    <!-- Social -->
+    <div class="section-label">Social</div>
+    <div class="action-row">
+      <button mat-button class="btn-outline action-btn" (click)="viewFollowers()">Followers</button>
+      <button mat-button class="btn-outline action-btn" (click)="viewFollowing()">Following</button>
+    </div>
+
+    <mat-divider class="theme-divider"></mat-divider>
+
+    <!-- Spotify / Artist -->
+    <div class="section-label">Spotify</div>
+
+    <div *ngIf="artistId" class="action-row">
+      <button mat-button class="btn-outline action-btn" (click)="songs()">View Your Music</button>
+      <button mat-button class="btn-outline action-btn" (click)="disconnectSpotify()">Remove Artist Profile</button>
+    </div>
+
+    <div class="action-row">
+      <button mat-button class="btn-outline action-btn" (click)="spotifySetup()">Change Spotify Account</button>
+    </div>
+
+    <div *ngIf="!artistId" class="artist-setup dark-form">
+      <p class="artist-setup-text">Are you a Spotify Artist? Enter your Artist ID below.</p>
+      <div class="artist-input-row">
+        <mat-form-field appearance="outline" class="artist-field">
+          <mat-label>Spotify Artist ID</mat-label>
+          <input matInput type="text" id="artistID">
+        </mat-form-field>
+        <button mat-flat-button class="btn-primary artist-submit-btn" (click)="addArtist()">Become Artist</button>
+      </div>
+    </div>
+
+    <mat-divider class="theme-divider"></mat-divider>
+
+    <!-- Danger zone -->
+    <div class="section-label">Danger Zone</div>
+    <button mat-button class="btn-danger" (click)="deleteAccount()">Delete Account Permanently</button>
+
+  </div>
 </div>
-<button (click)="spotifySetup()">Change Spotify Account?</button>
-<div *ngIf="!artistId">
-    <h2>Are you a Spotify Artist?</h2>
-    <input id= "artistID" placeholder="Enter Artist ID">
-    <button (click)="addArtist()">Become Artist</button>
-</div>
-<br>
-<button (click)="back()">Back</button>
-<h2>Want to Delete Account?</h2>
-<button (click)="deleteAccount()">Delete Account PERMANENTLY</button>

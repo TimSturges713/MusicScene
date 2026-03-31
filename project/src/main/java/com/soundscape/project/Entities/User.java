@@ -43,8 +43,10 @@ public class User {
 
     private String spotifyId;
 
+    @Column(length = 2000)
     private String refreshToken;
 
+    @Column(length = 2000)
     private String accessToken;
 
     private String artistId;

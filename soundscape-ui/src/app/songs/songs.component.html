@@ -1,8 +1,20 @@
-<h1>Albums</h1>
-<div *ngFor="let album of albumTracks | keyvalue: originalOrder">
-  <!---album.value is the list of tracks, button is just the album name-->
-  <button (click)="getTracks(album.value)">{{ album.key }}</button>
-  <!---when seeing track page, getTracks(listOfTracks) just displays them, passing to next page via localStorage-->
+<div class="content-page">
+  <div class="page-inner">
+
+    <div class="page-header">
+      <button mat-button class="btn-back" (click)="back()">← Back</button>
+      <h1 class="page-title">Albums</h1>
+    </div>
+
+    <div class="album-list">
+      <p *ngIf="loading">Loading...</p>
+      <button mat-button class="album-btn"
+        *ngFor="let album of albumTracks | keyvalue: originalOrder"
+        (click)="getTracks(album.value)">
+        <span class="album-note">♫</span>
+        <span>{{ album.key }}</span>
+      </button>
+    </div>
+
+  </div>
 </div>
-<br>
-<button (click)="back()">Back</button> 

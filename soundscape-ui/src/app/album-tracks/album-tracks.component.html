@@ -1,7 +1,17 @@
-<div>
-    <div *ngFor="let track of tracks">
-        <li>{{track}}</li>
+<div class="content-page">
+  <div class="page-inner">
+
+    <div class="page-header">
+      <button mat-button class="btn-back" (click)="back()">← Back</button>
+      <h1 class="page-title">Tracks</h1>
     </div>
-    <br>
-    <button (click) = "back()">Back</button>
+
+    <ul class="track-list">
+      <li class="track-item" *ngFor="let track of tracks; let i = index">
+        <span class="track-number">{{i + 1}}</span>
+        <span class="track-name">{{track}}</span>
+      </li>
+    </ul>
+
+  </div>
 </div>

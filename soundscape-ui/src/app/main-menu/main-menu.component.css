@@ -1,0 +1,73 @@
+.menu-page { display: flex; flex-direction: column; min-height: calc(100vh - 80px); }
+
+.menu-brand { margin-bottom: 56px; }
+
+.menu-nav { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+
+.nav-tile {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  width: 100%;
+  height: auto !important;
+  padding: 20px 24px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 14px !important;
+  color: #ffffff !important;
+  text-align: left !important;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease !important;
+}
+
+.nav-tile:hover {
+  background: rgba(29, 185, 84, 0.08) !important;
+  border-color: rgba(29, 185, 84, 0.3) !important;
+  transform: translateX(4px);
+}
+
+.nav-tile-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #ffffff;
+  display: block;
+  line-height: 1.3;
+}
+
+.nav-tile-sub {
+  font-size: 13px;
+  color: #888888;
+  display: block;
+  margin-top: 3px;
+  flex: 1;
+}
+
+.nav-tile-arrow {
+  font-size: 20px;
+  color: #1db954;
+  margin-left: auto;
+  padding-left: 16px;
+  transition: transform 0.2s ease;
+}
+
+.nav-tile:hover .nav-tile-arrow { transform: translateX(4px); }
+
+/* Make the button's inner content flex column */
+.nav-tile .mdc-button__label {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 100%;
+}
+
+.menu-footer { margin-top: 48px; display: flex; justify-content: center; }
+
+.menu-logout {
+  font-size: 13px !important;
+  color: #606060 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 50px !important;
+  padding: 0 20px !important;
+  transition: color 0.2s ease, border-color 0.2s ease !important;
+}
+.menu-logout:hover { color: #ef5350 !important; border-color: rgba(211, 47, 47, 0.4) !important; }

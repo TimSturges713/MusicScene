@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgFor } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-album-tracks',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, MatButtonModule],
   templateUrl: './album-tracks.component.html',
   styleUrl: './album-tracks.component.css'
 })

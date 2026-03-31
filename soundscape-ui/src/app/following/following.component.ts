@@ -6,12 +6,12 @@ import { FollowingService } from '../following.service';
 import { MessageService } from '../message.service';
 import { switchMap } from 'rxjs';
 import { Location } from '@angular/common';
-
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-following',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, MatButtonModule],
   templateUrl: './following.component.html',
   styleUrl: './following.component.css'
 })

@@ -7,11 +7,13 @@ import { UserService } from '../user.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-view-account',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, MatButtonModule, MatDividerModule],
   templateUrl: './view-account.component.html',
   styleUrl: './view-account.component.css'
 })
@@ -73,12 +75,13 @@ export class ViewAccountComponent implements OnInit{
 
   unfollow(){
       const username = this.username;
-      
+
       this.userService.getUser(localStorage.getItem("username") as string).subscribe(user => {
         this.userService.getUser(username).subscribe(u => {
-          this.followingService.unfollowUser(user.userId as number, u.userId as number).subscribe();
-          window.location.reload();
-          this.messageService.add("Unfollowed " + username);
+          this.followingService.unfollowUser(user.userId as number, u.userId as number).subscribe(() => {
+            this.following = false;
+            this.messageService.add("Unfollowed " + username);
+          });
         })
       })
     }
@@ -95,9 +98,7 @@ export class ViewAccountComponent implements OnInit{
           switchMap(me => this.followingService.getSpecifiedFollowing(me.userId as number, u.userId as number).pipe(
             switchMap(obj => {
               if (!obj) {
-                window.location.reload();
                 return this.followingService.followUser(me.userId as number, u.userId as number);
-
               } else {
                 this.messageService.add("You are already following this user");
                 return of(null);
@@ -106,7 +107,11 @@ export class ViewAccountComponent implements OnInit{
           ))
         );
       })
-    ).subscribe();
+    ).subscribe(result => {
+      if (result !== null) {
+        this.following = true;
+      }
+    });
 
   }
 
@@ -119,9 +124,6 @@ export class ViewAccountComponent implements OnInit{
 
     if(localStorage.getItem("viewedByAnother") == "true"){ // if you viewed this persons music, clear the cache
       let numofAlbums = Number(localStorage.getItem("aLength"));
-    if(!numofAlbums){
-      return;
-    }
     for(let i = 0; i < numofAlbums; i++){
       let numofTracks = Number(localStorage.getItem("album " + i + " len"));
       for(let j = 0; j < numofTracks; j++){

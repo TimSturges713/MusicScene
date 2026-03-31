@@ -1,0 +1,10 @@
+.account-username { font-size: 38px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em; margin-bottom: 28px; }
+
+.action-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.action-btn { height: 40px; padding: 0 20px !important; font-size: 14px; }
+
+.artist-setup { margin-top: 16px; }
+.artist-setup-text { color: #a0a0a0; font-size: 14px; margin: 0 0 12px; }
+.artist-input-row { display: flex; gap: 12px; align-items: flex-start; }
+.artist-field { flex: 1; }
+.artist-submit-btn { height: 56px; border-radius: 12px !important; padding: 0 24px !important; }

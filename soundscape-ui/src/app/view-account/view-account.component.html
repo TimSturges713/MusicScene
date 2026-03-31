@@ -1,20 +1,29 @@
-<h2>{{username}}</h2> 
+<div class="content-page">
+  <div class="page-inner">
 
-<div *ngIf="!following">
-<button (click)="follow()">Follow</button>
-</div>
-<div *ngIf="following">
-    <button (click)="unfollow()">Unfollow</button>
-</div>
+    <div class="page-header">
+      <button mat-button class="btn-back" (click)="back()">← Back</button>
+    </div>
 
-<h3>{{bio}}</h3>
-<h4>From {{city}}, {{state}}</h4>
-<div  *ngIf="artistId">
-<button (click)="getMusic()">View Music</button>
+    <div class="profile-header">
+      <h1 class="profile-username">{{username}}</h1>
+      <div class="profile-location" *ngIf="city && state">{{city}}, {{state}}</div>
+    </div>
+
+    <div class="profile-bio" *ngIf="bio">{{bio}}</div>
+
+    <div class="profile-follow">
+      <button mat-flat-button class="btn-primary follow-btn" *ngIf="!following" (click)="follow()">Follow</button>
+      <button mat-button class="btn-outline follow-btn" *ngIf="following" (click)="unfollow()">Unfollow</button>
+    </div>
+
+    <mat-divider class="theme-divider"></mat-divider>
+
+    <div class="profile-nav">
+      <button mat-button class="btn-outline nav-btn" (click)="followers()">Followers</button>
+      <button mat-button class="btn-outline nav-btn" (click)="navi_following()">Following</button>
+      <button mat-button class="btn-outline nav-btn" *ngIf="artistId" (click)="getMusic()">View Music</button>
+    </div>
+
+  </div>
 </div>
-<br>
-<button (click)="followers()">Followers</button>
-<br>
-<button (click)="navi_following()">Following</button>
-<br>
-<button (click)="back()">Back</button>

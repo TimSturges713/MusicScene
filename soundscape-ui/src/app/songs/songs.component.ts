@@ -4,14 +4,15 @@ import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
 import { Router } from '@angular/router';
 import { Album, PagingObject, SimplifiedTrack } from '../album';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { KeyValuePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-songs',
   standalone: true,
-  imports: [NgFor, KeyValuePipe],
+  imports: [NgFor, NgIf, KeyValuePipe, MatButtonModule],
   templateUrl: './songs.component.html',
   styleUrl: './songs.component.css'
 })
@@ -21,6 +22,7 @@ export class SongsComponent implements OnInit{
   albumNames: string[] = [];
   originalOrder = () => 0;
   albumTracks: Map<string, string[]> = new Map<string, string[]>();
+  loading: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router,private spotifyService: SpotifyService, private userService: UserService, private messageService: MessageService){};
 
@@ -56,7 +58,7 @@ export class SongsComponent implements OnInit{
   }
 
   getAlbums(){
-    if(localStorage.getItem("album 1") != null){  // if there is a cached album 1, load it back
+    if(localStorage.getItem("album 0") != null){  // if there is a cached album 0, load it back
       let length = Number(localStorage.getItem("aLength")); // Grab aLength from the cache (the amount of albums the artist has)
       for(let i = 0; i < length; i++){  // iterate from album 0 to length-1
         let albumLen = Number(localStorage.getItem("album " + i + " len")); // get numOfTracks from cache
@@ -71,6 +73,7 @@ export class SongsComponent implements OnInit{
       }
     }
     else{   // initial load, not cached yet
+      this.loading = true;
       let profile = "";
       if(this.otherUsersAlbum == "true"){
         profile = localStorage.getItem("other_username") as string;
@@ -78,7 +81,7 @@ export class SongsComponent implements OnInit{
       else{
         profile = localStorage.getItem("username") as string;
       }
-      
+
       this.userService.getUser(profile).subscribe((user) => {  //get current user
       this.spotifyService.getAlbums(user, this.otherUsersAlbum).subscribe((albums) => { // gets the albums from Spotify API
         localStorage.setItem("aLength", String(albums.length)); // gets the length of the list of albums and puts it in the cache
@@ -100,6 +103,7 @@ export class SongsComponent implements OnInit{
             albums[i].tracks.items.map(track => track.name) as string[]
           );
         }
+        this.loading = false;
       })
     })
   }

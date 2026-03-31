@@ -1,0 +1,4 @@
+.register-card { width: 460px; }
+.city-state-row { display: flex; gap: 12px; }
+.city-field { flex: 2; }
+.state-field { flex: 1; }

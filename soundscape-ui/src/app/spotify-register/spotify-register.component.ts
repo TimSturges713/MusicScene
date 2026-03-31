@@ -3,11 +3,14 @@ import { SpotifyService } from '../spotify.service';
 import { MessageService } from '../message.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-spotify-register',
   standalone: true,
-  imports: [],
+  imports: [MatCardModule, MatDividerModule, MatButtonModule],
   templateUrl: './spotify-register.component.html',
   styleUrl: './spotify-register.component.css'
 })

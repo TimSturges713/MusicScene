@@ -6,11 +6,14 @@ import { switchMap } from 'rxjs';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-search-profiles',
   standalone: true,
-  imports: [],
+  imports: [MatButtonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './search-profiles.component.html',
   styleUrl: './search-profiles.component.css'
 })

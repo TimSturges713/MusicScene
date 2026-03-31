@@ -48,19 +48,15 @@ export class UserService {
     console.log(password);
     this.getUser(username).subscribe(user => {
       if(user == null){
-        this.log.add("User not found");
+        this.log.notify("User not found", 'error');
         return;
       }
       if(user.password != password){
-        this.log.add("Incorrect password");
+        this.log.notify("Incorrect password", 'error');
         return;
       }
-      console.log("Logged in");
-      console.log(username);
       localStorage.setItem("username", username);
-      
-      this.log.add("You have been logged in");
-
+      this.log.notify("You have been logged in!", 'success');
       this.router.navigateByUrl('/main-menu');
     });
   }

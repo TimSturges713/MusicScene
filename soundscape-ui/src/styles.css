@@ -1,4 +1,155 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #0a0a0a; color: #ffffff; }
+
+/* ── Auth pages (login, register, spotify-register) ─────── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  padding: 32px 16px;
+  background: radial-gradient(ellipse at 60% 20%, #1a3a2a 0%, #0d1a13 50%, #0a0a0a 100%);
+}
+
+.brand-header { display: flex; align-items: center; gap: 10px; }
+.brand-icon { font-size: 32px; line-height: 1; filter: drop-shadow(0 0 8px #1db954aa); }
+.brand-name { font-size: 22px; font-weight: 700; letter-spacing: 0.08em; color: #ffffff; }
+
+.auth-card {
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 28px 20px;
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6) !important;
+  color: #ffffff;
+}
+
+.auth-card mat-card-title  { font-size: 22px !important; font-weight: 700 !important; color: #ffffff !important; letter-spacing: -0.01em; }
+.auth-card mat-card-subtitle { color: #a0a0a0 !important; font-size: 13.5px !important; margin-top: 4px !important; }
+.auth-card mat-card-header { padding-bottom: 8px; }
+
+.auth-form { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
+.auth-form .full-width { width: 100%; }
+
+/* Dark form field overrides — auth pages */
+.auth-form .mdc-notched-outline__leading,
+.auth-form .mdc-notched-outline__notch,
+.auth-form .mdc-notched-outline__trailing { border-color: rgba(255, 255, 255, 0.18) !important; }
+
+.auth-form .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.auth-form .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.auth-form .mat-mdc-form-field:hover .mdc-notched-outline__trailing { border-color: rgba(29, 185, 84, 0.5) !important; }
+
+.auth-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.auth-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.auth-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing { border-color: #1db954 !important; border-width: 2px !important; }
+
+.auth-form .mat-mdc-input-element { color: #ffffff !important; caret-color: #1db954; }
+.auth-form .mat-mdc-floating-label { color: #888888 !important; }
+.auth-form .mat-mdc-form-field.mat-focused .mat-mdc-floating-label { color: #1db954 !important; }
+
+.auth-primary-btn {
+  height: 48px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em;
+  border-radius: 50px !important;
+  background: #1db954 !important;
+  color: #000000 !important;
+  margin-top: 8px;
+  width: 100%;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
+  box-shadow: 0 4px 20px rgba(29, 185, 84, 0.35) !important;
+}
+.auth-primary-btn:hover { background: #1ed760 !important; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(29, 185, 84, 0.5) !important; }
+.auth-primary-btn:active { transform: translateY(0); }
+
+.auth-divider { border-color: rgba(255, 255, 255, 0.08) !important; margin: 16px 0 4px !important; }
+
+.auth-footer { display: flex; justify-content: center; align-items: center; gap: 4px; padding: 8px 0 4px; }
+.auth-footer-text { font-size: 13.5px; color: #888888; }
+.auth-footer-link { font-size: 13.5px !important; font-weight: 600 !important; color: #1db954 !important; padding: 0 6px !important; min-width: unset !important; }
+
+/* ── Content pages (post-login) ─────────────────────────── */
+.content-page {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 60% 20%, #1a3a2a 0%, #0d1a13 50%, #0a0a0a 100%);
+  padding: 40px 24px;
+}
+
+.page-inner { max-width: 680px; margin: 0 auto; }
+
+.page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
+.page-title { font-size: 26px; font-weight: 700; color: #ffffff; margin: 0; letter-spacing: -0.01em; }
+
+/* ── Shared buttons ──────────────────────────────────────── */
+.btn-primary {
+  font-weight: 600 !important;
+  border-radius: 50px !important;
+  background: #1db954 !important;
+  color: #000000 !important;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
+  box-shadow: 0 4px 16px rgba(29, 185, 84, 0.3) !important;
+}
+.btn-primary:hover { background: #1ed760 !important; transform: translateY(-1px); box-shadow: 0 6px 22px rgba(29, 185, 84, 0.45) !important; }
+
+.btn-back { border: 1px solid rgba(255, 255, 255, 0.15) !important; border-radius: 50px !important; color: #a0a0a0 !important; min-width: unset !important; }
+.btn-back:hover { border-color: rgba(255, 255, 255, 0.4) !important; color: #ffffff !important; }
+
+.btn-outline { border: 1px solid rgba(255, 255, 255, 0.18) !important; border-radius: 50px !important; color: #e0e0e0 !important; background: transparent !important; font-weight: 500 !important; transition: border-color 0.2s ease, background 0.2s ease !important; }
+.btn-outline:hover { border-color: rgba(29, 185, 84, 0.5) !important; color: #ffffff !important; background: rgba(29, 185, 84, 0.08) !important; }
+
+.btn-danger { border: 1px solid rgba(211, 47, 47, 0.35) !important; border-radius: 50px !important; color: #ef5350 !important; background: rgba(211, 47, 47, 0.06) !important; transition: background 0.2s ease, border-color 0.2s ease !important; }
+.btn-danger:hover { background: rgba(211, 47, 47, 0.15) !important; border-color: rgba(211, 47, 47, 0.65) !important; }
+
+/* ── Divider / section label ─────────────────────────────── */
+.theme-divider { border-color: rgba(255, 255, 255, 0.08) !important; margin: 24px 0 !important; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #606060; margin-bottom: 12px; padding-left: 2px; }
+
+/* ── Dark form fields — content pages ───────────────────── */
+.dark-form .mdc-notched-outline__leading,
+.dark-form .mdc-notched-outline__notch,
+.dark-form .mdc-notched-outline__trailing { border-color: rgba(255, 255, 255, 0.18) !important; }
+
+.dark-form .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.dark-form .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.dark-form .mat-mdc-form-field:hover .mdc-notched-outline__trailing { border-color: rgba(29, 185, 84, 0.5) !important; }
+
+.dark-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.dark-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.dark-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing { border-color: #1db954 !important; border-width: 2px !important; }
+
+.dark-form .mat-mdc-input-element { color: #ffffff !important; caret-color: #1db954; }
+.dark-form .mat-mdc-floating-label { color: #888888 !important; }
+.dark-form .mat-mdc-form-field.mat-focused .mat-mdc-floating-label { color: #1db954 !important; }
+
+/* ── User list ───────────────────────────────────────────── */
+.user-list { display: flex; flex-direction: column; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.user-list-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 12px; font-size: 15px; color: #e0e0e0; transition: background 0.15s ease; }
+.user-list-item:hover { background: rgba(255, 255, 255, 0.07); }
+
+/* ── Album buttons ───────────────────────────────────────── */
+.album-list { display: flex; flex-direction: column; gap: 10px; }
+.album-btn { width: 100%; text-align: left !important; justify-content: flex-start !important; padding: 16px 20px !important; background: rgba(255, 255, 255, 0.04) !important; border: 1px solid rgba(255, 255, 255, 0.07) !important; border-radius: 12px !important; color: #e0e0e0 !important; font-size: 15px !important; font-weight: 500 !important; height: auto !important; line-height: 1.4 !important; transition: background 0.15s ease, border-color 0.15s ease !important; }
+.album-btn:hover { background: rgba(29, 185, 84, 0.1) !important; border-color: rgba(29, 185, 84, 0.3) !important; color: #ffffff !important; }
+
+/* ── Track list ──────────────────────────────────────────── */
+.track-list { display: flex; flex-direction: column; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.track-item { display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; color: #d0d0d0; font-size: 14px; transition: background 0.15s ease; }
+.track-item:hover { background: rgba(255, 255, 255, 0.06); color: #ffffff; }
+.track-number { font-size: 12px; color: #606060; min-width: 20px; text-align: right; }
+
+/* ── Empty state ─────────────────────────────────────────── */
+.empty-state { color: #606060; font-size: 15px; text-align: center; padding: 48px 0; }
+
+/* ── Snackbar ────────────────────────────────────────────── */
+.snack-error .mdc-snackbar__surface { background-color: #d32f2f !important; color: white !important; }
+.snack-success .mdc-snackbar__surface { background-color: #388e3c !important; color: white !important; }
+.snack-info .mdc-snackbar__surface { background-color: #1976d2 !important; color: white !important; }
+.snack-error .mat-mdc-button, .snack-success .mat-mdc-button, .snack-info .mat-mdc-button { color: rgba(255, 255, 255, 0.8) !important; }

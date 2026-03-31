@@ -1,20 +1,65 @@
+<div class="auth-page">
 
-<div>
-    <input id= "username" type="text" placeholder="Username">
-    <br>
-    <input id ="password" type="text" placeholder="Password">
-    <br>
-    <input id ="email" type="text" placeholder="Email">
-    <br>
-    <input id ="bio" type="text" placeholder="Bio">
-    <br>
-    <input id ="city" type="text" placeholder="City">
-    <br>
-    <input id ="state" type="text" placeholder="State">
-    <br>
-    
-    <button (click)="register()">Register</button>
-</div>
-<div>
-    <button (click)="back()">Back</button>
+  <div class="brand-header">
+    <div class="brand-icon">♪</div>
+    <span class="brand-name">SoundScape</span>
+  </div>
+
+  <mat-card class="auth-card register-card">
+
+    <mat-card-header>
+      <mat-card-title>Create account</mat-card-title>
+      <mat-card-subtitle>Join the music community</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="auth-form">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" id="username" autocomplete="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" id="password" autocomplete="new-password">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" id="email" autocomplete="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Bio</mat-label>
+          <input matInput type="text" id="bio">
+        </mat-form-field>
+
+        <div class="city-state-row">
+          <mat-form-field appearance="outline" class="city-field">
+            <mat-label>City</mat-label>
+            <input matInput type="text" id="city">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="state-field">
+            <mat-label>State</mat-label>
+            <input matInput type="text" id="state">
+          </mat-form-field>
+        </div>
+
+        <button mat-flat-button type="button" class="auth-primary-btn" (click)="register()">
+          Create Account
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <mat-divider class="auth-divider"></mat-divider>
+
+    <mat-card-actions class="auth-footer">
+      <span class="auth-footer-text">Already have an account?</span>
+      <button mat-button class="auth-footer-link" (click)="back()">Sign in</button>
+    </mat-card-actions>
+
+  </mat-card>
+
 </div>

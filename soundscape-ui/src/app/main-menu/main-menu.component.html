@@ -1,9 +1,32 @@
-<div>
-    <button (click)="searchProfiles()">Search Profiles</button>
-    <br>
-    <button (click)="account()">Account</button>
-</div>
-<div>
+<div class="content-page">
+  <div class="page-inner menu-page">
 
-    <button (click)="logout()">Logout</button>
+    <div class="menu-brand">
+      <div class="brand-header">
+        <div class="brand-icon">♪</div>
+        <span class="brand-name">SoundScape</span>
+      </div>
+    </div>
+
+    <div class="menu-nav">
+
+      <button mat-button class="nav-tile" (click)="searchProfiles()">
+        <span class="nav-tile-title">Search Profiles</span>
+        <span class="nav-tile-sub">Discover and follow other users</span>
+        <span class="nav-tile-arrow">→</span>
+      </button>
+
+      <button mat-button class="nav-tile" (click)="account()">
+        <span class="nav-tile-title">My Account</span>
+        <span class="nav-tile-sub">View your profile and settings</span>
+        <span class="nav-tile-arrow">→</span>
+      </button>
+
+    </div>
+
+    <div class="menu-footer">
+      <button mat-button class="menu-logout" (click)="logout()">Sign Out</button>
+    </div>
+
+  </div>
 </div>
