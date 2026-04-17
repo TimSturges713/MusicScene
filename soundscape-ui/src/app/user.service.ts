@@ -43,7 +43,7 @@ export class UserService {
    * @param password The password of the requested user to log in to
    */
   login(username:string, password:string){
-    console.log(username);
+    console.log(username); 
     
     console.log(password);
     this.getUser(username).subscribe(user => {

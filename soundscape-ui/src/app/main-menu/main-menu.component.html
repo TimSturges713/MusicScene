@@ -25,7 +25,7 @@
     </div>
 
     <google-map height ="400px" width="100%" [center]="center" [zoom]="zoom">
-      <map-circle [center]="center" [radius]="circle_radius" [options]="options" (circleClick)="onCircleClick($event)"/>
+      <map-circle [center]="circle_center" [radius]="circle_radius" [options]="options" (circleClick)="onCircleClick($event)"/>
     </google-map>
 
     <div class="menu-footer">

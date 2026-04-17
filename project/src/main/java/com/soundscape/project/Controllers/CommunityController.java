@@ -20,7 +20,7 @@ import com.soundscape.project.Repos.CommunityRepository;
 // Establishes the http response format for communication with Angular front-end 
 @RestController
 // The endpoint for all UserController methods
-@RequestMapping(path="/users")
+@RequestMapping(path="/community")
 @CrossOrigin(origins = "http://localhost:4200")
 public class CommunityController {
 
@@ -30,7 +30,7 @@ public class CommunityController {
     /*
      * Creates a following object
      */
-    @PostMapping(path="/community")
+    @PostMapping(path="/")
     public ResponseEntity<Community> createCommunity (@RequestBody Community community) {
         if(community == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -40,33 +40,33 @@ public class CommunityController {
     }
 
     // get the followers of the inputted user
-    @GetMapping(path="/community/{lat}/{lng}")
-    public ResponseEntity<Community> getCommunity(@PathVariable float lat, @PathVariable float lng) {
-        Community n = communityRepository.findByLatLng(lat, lng);
+    @GetMapping(path="/{name}")
+    public ResponseEntity<Community> getCommunity(@PathVariable String name) {
+        Community n = communityRepository.findByName(name);
         if(n == null){ // if there's no followers
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Community>(n, HttpStatus.OK); 
     }
 
-    @DeleteMapping(path="/community/{lat}/{lng}")
-    public ResponseEntity<Community> deleteCommunity(@PathVariable float lat, @PathVariable float lng){
-        Community n = communityRepository.findByLatLng(lat, lng);
+    @DeleteMapping(path="/{name}")
+    public ResponseEntity<Community> deleteCommunity(@PathVariable String name){
+        Community n = communityRepository.findByName(name);
         if(n == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-       communityRepository.delete(n);
+        communityRepository.delete(n);
         return new ResponseEntity<Community>(n, HttpStatus.OK);
     }
 
-    @PutMapping(path="/{lat}/{lng}")
-    public ResponseEntity<Community> updateCommunity(@PathVariable float lat, @PathVariable float lng, @RequestBody Community community) {
-        Community n = communityRepository.findByLatLng(lat, lng);
+    @PutMapping(path="/{name}")
+    public ResponseEntity<Community> updateCommunity(@PathVariable String name, @RequestBody Community community) {
+        Community n = communityRepository.findByName(name);
         if (n == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         n.setLat(community.getLat());
-        n.setLng(community.getLat());
+        n.setLng(community.getLng());
         n.setRadius(community.getRadius());
         n.setPopulation(community.getPopulation());
         n.setName(community.getName());

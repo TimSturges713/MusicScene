@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from '../message.service';
 import { MatButtonModule } from '@angular/material/button';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { CommunityService } from '../community.service';
+import { Community } from '../Community';
 
 @Component({
   selector: 'app-main-menu',
@@ -12,20 +13,28 @@ import { CommunityService } from '../community.service';
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.css'
 })
-export class MainMenuComponent {
+export class MainMenuComponent implements OnInit{
   constructor(private communityService: CommunityService, private router: Router, private messageService: MessageService){}
 
   center: google.maps.LatLngLiteral = {lat: 40.7128, lng: -74.0060};
   zoom = 12;
-
-  circle_center: google.maps.LatLngLiteral = this.center;
-  circle_radius = 4000;
+  
+  circle_center: google.maps.LatLngLiteral = {lat: 0, lng: 0};
+  circle_radius = 0;
   fillColor = "#f02e58";
   fillOpacity = 0.3;
-  options:google.maps.CircleOptions = {
+  options:google.maps.CircleOptions = { 
     fillColor: this.fillColor,
     fillOpacity: this.fillOpacity
   };
+
+  ngOnInit(){
+    this.communityService.getCommunity("New York").subscribe((community) => {
+      if(!community) return;
+      this.circle_center = {lat: community.lat, lng: community.lng};
+      this.circle_radius = community.radius;
+    })
+  }
 
   // Redirects user to the account details page
   account(){
@@ -42,7 +51,7 @@ export class MainMenuComponent {
     let lat = event.latLng?.lat() as number
     let lng = event.latLng?.lng() as number
 
-    let community = this.communityService.getCommunity(lat, lng)
+    
   }
 
   /**

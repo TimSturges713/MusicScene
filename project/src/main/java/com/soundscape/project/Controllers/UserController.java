@@ -90,7 +90,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+ 
     // Update an existing user specified user_id and the modified user object you want to put there
     @PutMapping(path="/{username}")
     public ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User user) {

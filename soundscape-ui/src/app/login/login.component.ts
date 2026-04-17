@@ -3,6 +3,7 @@ import { UserService } from '../user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from '../message.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
@@ -12,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HttpClientModule, MatDividerModule, MatCardModule, MatInputModule, MatFormFieldModule, MatButtonModule],
+  imports: [HttpClientModule, FormsModule, MatDividerModule, MatCardModule, MatInputModule, MatFormFieldModule, MatButtonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -30,7 +31,7 @@ export class LoginComponent {
     if(!username || !password){
       this.messageService.notify("Please enter a username and password", 'error');
       return;
-    }
+    } 
     this.userService.login(username, password);
   }
 

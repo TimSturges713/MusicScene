@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from 'express';
 import { Community } from './Community';
-import { Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -16,10 +15,10 @@ export class CommunityService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
   
-  constructor(private messageService: MessageService, private http: HttpClient, private router: Router) { }
+  constructor(private messageService: MessageService, private http: HttpClient) { }
 
-  getCommunity(lat:number, lng:number){
-    return this.http.get<Community>(this.communityUrl + "/" + lat + "/" + lng).pipe(tap(), this.handleError<number[]>('getCommunity'));
+  getCommunity(name:string): Observable<Community>{
+    return this.http.get<Community>(this.communityUrl + "/" + name).pipe(tap(_ => {}), catchError(this.handleError<Community>('getCommunity')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
