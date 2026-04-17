@@ -22,7 +22,7 @@ export class SearchProfilesComponent {
   username = localStorage.getItem("username") as string;
 
   constructor(private router: Router, private messageService: MessageService, private userService: UserService, private followingService: FollowingService){}
-
+ 
   ngOnInit(): void{
 
   }
